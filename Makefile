@@ -1,5 +1,7 @@
 
-.PHONY: help install-dev lint type test format build clean
+.PHONY: help install-dev lint type test format format-check build clean
+
+.PHONY: help install-dev lint type test format format-check build clean
 
 help:
 	@echo "Targets: install-dev lint type test format build clean"
@@ -9,13 +11,13 @@ install-dev:
 	pip install -e .[dev]
 
 format-check:
-	poetry run ruff format aws_lambda_powertools tests examples --check
+	ruff format src tests examples --check
 
 format:
-	poetry run ruff format aws_lambda_powertools tests examples
+	ruff format src tests examples
 
 lint: format
-	poetry run ruff check aws_lambda_powertools tests examples
+	ruff check src tests examples
 
 type:
 	mypy src/clipse
