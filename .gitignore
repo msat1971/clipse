@@ -1,163 +1,243 @@
-# -----------------------------
-# Python
-# -----------------------------
+# -----------------------------------------------------------------------------
+# .gitignore
+# -----------------------------------------------------------------------------
 
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
+# === Python bytecode & caches ===
 *$py.class
+*.py[cod]
+*.pyd
+*.pyo
+__pycache__/
 
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
+# === Build / packaging artifacts ===
+*.egg
+*.egg-info/
+*.wheel
+*.whl
+.eggs/
+.installed.cfg
+MANIFEST
 build/
 develop-eggs/
 dist/
 downloads/
 eggs/
-.eggs/
 lib/
 lib64/
 parts/
 sdist/
 var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 
-# PyInstaller
-*.manifest
-*.spec
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
-.hypothesis/
-.pytest_cache/
-cover/
-
-# Translations
-*.mo
-*.pot
-
-# Jupyter Notebook
-.ipynb_checkpoints
-
-# IPython
-profile_default/
-ipython_config.py
-
-# Pyenv
+# === Virtual environments ===
+.env/
 .python-version
-
-# pipenv
-Pipfile.lock
-
-# Poetry
-poetry.lock
-
-# pyenv-virtualenv
-venv/
+.venv/
 ENV/
 env/
-env.bak/
-venv.bak/
+pip-log.txt
+pip-wheel-metadata/
+venv/
 
-# Virtualenv
-*.venv
-*.env
-venv*/
-ENV*/
-
-# mypy / type checking
-.mypy_cache/
+# === Testing & coverage ===
+.coverage
+.coverage.*
 .dmypy.json
-dmypy.json
-
-# pytype
+.hypothesis/
+.mypy_cache/
+.nox/
+.pyre/
+.pytest_cache/
 .pytype/
+.ruff_cache/
+.tox/
+coverage.xml
+dmypy.json
+htmlcov/
+pytestdebug.log
 
-# Cython debug symbols
-cython_debug/
+# === Jupyter notebooks ===
+**/.ipynb_checkpoints/
+.ipynb_checkpoints/
+.jupyter/
 
-# -----------------------------
-# IDEs
-# -----------------------------
+# === Django / Flask (if used) ===
+*.log
+.webassets-cache
+db.sqlite3
+instance/
+local_settings.py
 
-# PyCharm
-.idea/
-*.iml
-/.qodo/
+# === Data / artifacts (keep .gitkeep) ===
+!data/.gitkeep
+data/*
+models/
+outputs/
+reports/
 
-# VS Code
-.vscode/
+# === Editors / IDEs ===
+*.sublime-project
+*.sublime-workspace
+.classpath
 .history/
-*.code-workspace
+.idea/
+.metadata/
+.project
+.settings/
+.vscode/
+nbproject/
 
-# -----------------------------
-# OS Specific
-# -----------------------------
-
-# macOS
+# === Operating systems ===
+$RECYCLE.BIN/
 .DS_Store
-.AppleDouble
-.LSOverride
-
-# Windows
+.Spotlight-V100
+.Trashes
+Desktop.ini
 Thumbs.db
 ehthumbs.db
-Desktop.ini
 
-# Linux
-*~
+# === Node / JS (if present) ===
+.parcel-cache/
+.pnpm-store/
+# build/
+coverage-final.json
+# dist/
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# -----------------------------
-# Docker
-# -----------------------------
+# === Serverless / IaC (if present) ===
+.aws-sam/
+.serverless/
+.terraform/
+cdk.out/
+terraform.tfstate
+terraform.tfstate.*
 
-# Logs
-*.log
-logs/
-*.pid
-*.seed
-*.pid.lock
-
-# Environment variables
-.env
-.env.*        # e.g. .env.local, .env.dev, .env.prod
-
-# Docker Compose overrides
-docker-compose.override.yml
-docker-compose.*.override.yml
-
-# Named volumes (if mapped locally)
-data/
-volumes/
+# === Project tooling ===
+.cache/
+.direnv/
+.envrc
+.pre-commit-cache/
+.pre-commit-config.yaml~
+.tmp/
 tmp/
 
-# Docker build output
-**/Dockerfile~
-**/docker-compose.override.yml~
-.cache/
+# === Project-specific ===
+!.github/workflows/lib
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+# !404.html
+!docs/overrides/*.html
+*.cab
+*.cover
+*.html
+*.iws
+*.lnk
+*.manifest
+*.mo
+*.msi
+*.msix
+*.msm
+*.msp
+*.pot
+*.sage.py
+*.so
+*.spec
+*.stackdump
+*.swp
+*~
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.DocumentRevisions-V100
+.LSOverride
+.Python
+.TemporaryItems
+.Trash-*
+.VolumeIcon.icns
+._*
+.amazonq
+.apdisk
+.cache
+.cdk
+.claude
+.com.apple.timemachine.donotpresent
+.directory
+.env
+.fseventsd
+.fuse_hidden*
+.github/instructions
+.history
+.idea/**/contentModel.xml
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/dataSources/
+.idea/**/dbnavigator.xml
+.idea/**/dictionaries
+.idea/**/dynamic.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+.idea/**/mongoSettings.xml
+.idea/**/shelf
+.idea/**/sqlDataSources.xml
+.idea/**/tasks.xml
+.idea/**/uiDesigner.xml
+.idea/**/usage.statistics.xml
+.idea/**/workspace.xml
+.idea/caches/build_file_checksums.ser
+.idea/httpRequests
+.idea/replstate.xml
+.idea/sonarlint
+.idea_modules/
+.ipynb_checkpoints
+.kiro
+.nfs*
+.ropeproject
+.scrapy
+.spyderproject
+.spyproject
+.venv
+.vscode
+.vscode/*
+/.idea/*
+/site
+Icon
+Network Trash Folder
+TMP_CHANGELOG.md
+Temporary Items
+Thumbs.db:encryptable
+[Dd]esktop.ini
+api/
+atlassian-ide-plugin.xml
+cdk.context.json
+cdk.out
+celerybeat-schedule
+cmake-build-*/
+com_crashlytics_export_strings.xml
+crashlytics-build.properties
+crashlytics.properties
+db.sqlite3-journal
+docs/.cache/
+docs/_build/
+docs/public
+ehthumbs_vista.db
+env.bak/
+examples/**/sam/.aws-sam
+fabric.properties
+ipython_config.py
+node_modules
+nosetests.xml
+out/
+pip-delete-this-directory.txt
+profile_default/
+share/python-wheels/
+site/
+target/
+test_report
+venv.bak/
+wheelhouse
+wheels/
 
-# -----------------------------
-# Misc / Project Custom
-# -----------------------------
-
-# Optional: add project-specific ignores here
-# e.g. local config, secrets, generated files
-
-/.qodo/

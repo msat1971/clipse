@@ -8,8 +8,14 @@ install-dev:
 	python -m pip install -U pip
 	pip install -e .[dev]
 
-lint:
-	ruff check .
+format-check:
+	poetry run ruff format aws_lambda_powertools tests examples --check
+
+format:
+	poetry run ruff format aws_lambda_powertools tests examples
+
+lint: format
+	poetry run ruff check aws_lambda_powertools tests examples
 
 type:
 	mypy src/clipse

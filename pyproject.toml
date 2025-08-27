@@ -9,14 +9,26 @@ description = "Command Line Interface Specification Engine"
 readme = "README.md"
 requires-python = ">=3.9"
 license = { file = "LICENSE" }
-authors = [{ name = "Your Name" }]
+authors = [{ name = "Mark Satterfield" }]
 keywords = ["python", "library"]
 classifiers = [
-  "Programming Language :: Python :: 3",
-  "Programming Language :: Python :: 3 :: Only",
-  "License :: MIT License",
-  "Typing :: Typed",
+  "Development Status :: 1 - Planning",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT No Attribution License (MIT-0)",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed"
 ]
+keywords = [
+  "clipse",
+  "cli",
+  "builder"
+]
+license = "MIT"
 
 [project.urls]
 Homepage = "https://github.com/msat1971/clipse"
@@ -53,10 +65,18 @@ addopts = "-q --strict-markers --disable-warnings --maxfail=1"
 packages = ["src/clipse"]
 
 dependencies = []
-optional-dependencies = { dev = ["pytest", "pytest-cov", "mypy", "ruff", "build", "twine", "mkdocs-material"] }
-
-
-
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-cov",
+  "pytest-mock",
+  "mypy",
+  "ruff",
+  "build",
+  "twine",
+  "mkdocs-material",
+  "coverage[toml]>=7.6,<8",  # ← this is the equivalent of coverage = {extras=["toml"], version="^7.6"}
+]
 
 
 
