@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "clipse"
+version = "0.1.0"
+description = "Command Line Interface Specification Engine"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Your Name" }]
+keywords = ["python", "library"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: MIT License",
+  "Typing :: Typed",
+]
+
+[project.urls]
+Homepage = "https://github.com/msat1971/clipse"
+Documentation = "https://github.com/msat1971/clipse/docs"
+Changelog = "https://github.com/msat1971/clipse/releases"
+
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+branch = true
+source = ["src/clipse"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+select = ["E","F","I","UP","B","SIM","PL"]
+
+[tool.mypy]
+python_version = "3.9"
+check_untyped_defs = true
+disallow_incomplete_defs = true
+warn_unused_ignores = true
+strict_optional = true
+no_implicit_optional = true
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers --disable-warnings --maxfail=1"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/clipse"]
+
+dependencies = []
+optional-dependencies = { dev = ["pytest", "pytest-cov", "mypy", "ruff", "build", "twine", "mkdocs-material"] }
+
+
+
+
+
+
+

@@ -1,2 +1,4 @@
 # clipse
-command line interface spec engine parse
+
+Command Line Interface Specification Engine
+Spec-first CLI engine.

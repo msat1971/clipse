@@ -1,0 +1,373 @@
+{
+  "clipse_version": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Example configuration file",
+  "behavior": {
+    "allow_abbrev": false,
+    "stop_at_positional": true,
+    "env_prefix": "YOURCLI_",
+    "completion": [
+      "bash",
+      "zsh",
+      "fish"
+    ],
+    "color": "auto",
+    "pager": false,
+    "telemetry": false,
+    "exit_codes": {
+      "ok": 0,
+      "usage": 2,
+      "runtime_error": 1
+    },
+    "io": {
+      "stdin": {
+        "accepts": false,
+        "when": []
+      },
+      "stdout": {
+        "default": "text"
+      },
+      "stderr": {
+        "diagnostics": true
+      },
+      "pipes_and_redirection": true
+    }
+  },
+  "shared_defs": {
+    "vars": {
+      "name": "Your CLI",
+      "cmd_name": "yourcli",
+      "version": "0.1.0",
+      "description_short": "{{vars.name}}. Your way!",
+      "description_long": "{{vars.name}} long description.",
+      "homepage": "https://example.com/{{vars.cmd_name}}"
+    },
+    "options": {
+      "dir": {
+        "names": [
+          "-d",
+          "--dir"
+        ],
+        "kind": "option",
+        "takes_value": true,
+        "value_name": "DIR",
+        "type": {
+          "kind": "dir",
+          "constraints": {
+            "relativity": "absolute",
+            "exists": "dir"
+          }
+        },
+        "description_short": "Absolute directory (must exist).",
+        "env": {
+          "var": "YOURCLI_DIR",
+          "override_cli": true,
+          "update": true
+        }
+      },
+      "template": {
+        "names": [
+          "-t",
+          "--template"
+        ],
+        "kind": "option",
+        "takes_value": true,
+        "value_name": "TEMPLATE",
+        "type": {
+          "kind": "enum",
+          "values": [
+            "basic",
+            "web",
+            "api"
+          ]
+        },
+        "description_short": "Template to use."
+      },
+      "force": {
+        "names": [
+          "-f",
+          "--force"
+        ],
+        "kind": "flag",
+        "takes_value": false,
+        "type": "boolean",
+        "description_short": "Force operation and skip confirmations."
+      }
+    },
+    "objects": {
+      "foo": {
+        "names": [
+          "foo"
+        ],
+        "description_short": "Foo(s)"
+      }
+    },
+    "actions": {
+      "create": {
+        "names": [
+          "create",
+          "new"
+        ],
+        "description_short": "Create an object"
+      },
+      "delete": {
+        "names": [
+          "delete",
+          "rm"
+        ],
+        "description_short": "Delete resource.",
+        "options": [
+          {
+            "id": "force",
+            "$ref": "#/shared_defs/options/force"
+          }
+        ]
+      }
+    }
+  },
+  "global": {
+    "options": [
+      {
+        "id": "help",
+        "names": [
+          "-h",
+          "--help",
+          "?"
+        ],
+        "kind": "flag",
+        "takes_value": false,
+        "type": "boolean",
+        "description_short": "Show help and exit."
+      },
+      {
+        "id": "version",
+        "names": [
+          "--version"
+        ],
+        "kind": "flag",
+        "takes_value": false,
+        "type": "boolean",
+        "description_short": "Show version information and exit."
+      },
+      {
+        "id": "verbose",
+        "names": [
+          "-v",
+          "--verbose"
+        ],
+        "kind": "flag",
+        "takes_value": false,
+        "type": "count",
+        "default": 0,
+        "description_short": "Increase verbosity (repeatable)."
+      }
+    ]
+  },
+  "objects": [
+    {
+      "id": "foo",
+      "names": [
+        "foo"
+      ],
+      "description_short": "Manage {{id}}(s).",
+      "default_action": "list",
+      "actions": [
+        {
+          "id": "create",
+          "$ref": "#/shared_defs/actions/create",
+          "description_short": "Create a foo.",
+          "description_long": "Create a foo by...",
+          "options": [
+            {
+              "id": "name",
+              "names": [
+                "-n",
+                "--name"
+              ],
+              "kind": "option",
+              "takes_value": true,
+              "type": "string",
+              "required": true,
+              "value_name": "NAME",
+              "description_short": "Foo name."
+            },
+            {
+              "id": "dir",
+              "$ref": "#/shared_defs/options/dir",
+              "description_short": "Target directory (absolute, must exist)."
+            },
+            {
+              "id": "template",
+              "$ref": "#/shared_defs/options/template"
+            },
+            {
+              "id": "from_config",
+              "names": [
+                "--from-config"
+              ],
+              "kind": "option",
+              "takes_value": true,
+              "type": {
+                "kind": "file",
+                "constraints": {
+                  "exists": "file"
+                }
+              },
+              "value_name": "FILE",
+              "env": "YOURCLI_CONFIG",
+              "description_short": "Read parameters from JSON config file."
+            },
+            {
+              "id": "yes",
+              "names": [
+                "-y",
+                "--yes"
+              ],
+              "kind": "flag",
+              "takes_value": false,
+              "type": "boolean",
+              "description_short": "Assume 'yes' to all prompts."
+            },
+            {
+              "id": "from_stdin",
+              "names": [
+                "--from-stdin"
+              ],
+              "kind": "flag",
+              "takes_value": false,
+              "type": "boolean",
+              "description_short": "Read spec from STDIN (JSON)."
+            }
+          ],
+          "positionals": [
+            {
+              "id": "extra_files",
+              "name": "EXTRA_FILES",
+              "kind": "positional",
+              "type": {
+                "kind": "list",
+                "of": {
+                  "kind": "path"
+                }
+              },
+              "arity": "0..*",
+              "description_short": "Optional extra files to include."
+            }
+          ],
+          "constraints": {
+            "requires": [
+              "name"
+            ],
+            "conflicts": [
+              [
+                "from_config",
+                "template"
+              ],
+              [
+                "from_config",
+                "extra_files"
+              ]
+            ],
+            "exactly_one_of": [
+              [
+                "template",
+                "from_config"
+              ]
+            ],
+            "at_least_one_of": [
+              [
+                "dir",
+                "from_config"
+              ]
+            ],
+            "custom": [
+              {
+                "message": "When from_stdin is set, omit extra_files.",
+                "predicate": "if(from_stdin) then missing(extra_files)"
+              }
+            ]
+          },
+          "io": {
+            "stdin": {
+              "accepts": true,
+              "when": [
+                "flag:from_stdin"
+              ]
+            }
+          }
+        },
+        {
+          "id": "delete",
+          "$ref": "#/shared_defs/actions/delete",
+          "description_short": "Delete a foo.",
+          "positionals": [
+            {
+              "id": "foo_ref",
+              "name": "FOO",
+              "kind": "positional",
+              "type": "string",
+              "required": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "bar",
+      "names": [
+        "bar"
+      ],
+      "description_short": "Bar(s)"
+    }
+  ],
+  "actions": [
+    {
+      "id": "list",
+      "names": [
+        "list",
+        "ls"
+      ],
+      "description_short": "List object(s).",
+      "objects": [
+        {
+          "id": "bar",
+          "description_short": "Lists bar(s)",
+          "options": [
+            {
+              "id": "name",
+              "names": [
+                "-n",
+                "--name"
+              ],
+              "description_short": "Lists a bar by name",
+              "kind": "option",
+              "takes_value": true,
+              "type": "string",
+              "required": true,
+              "value_name": "NAME"
+            }
+          ]
+        },
+        {
+          "id": "foo",
+          "description_short": "Lists foo(s)",
+          "options": [
+            {
+              "id": "name",
+              "names": [
+                "-n",
+                "--name"
+              ],
+              "description_short": "Lists a foo by name",
+              "kind": "option",
+              "takes_value": true,
+              "type": "string",
+              "required": true,
+              "value_name": "NAME"
+            }
+          ]
+        }
+      ],
+      "default_object": "foo"
+    }
+  ]
+}
