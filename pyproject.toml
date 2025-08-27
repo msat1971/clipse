@@ -1,0 +1,83 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "clipse"
+version = "0.1.0"
+description = "Command Line Interface Specification Engine"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Mark Satterfield" }]
+keywords = ["python", "library"]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT No Attribution License (MIT-0)",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Typing :: Typed"
+]
+keywords = [
+  "clipse",
+  "cli",
+  "builder"
+]
+license = "MIT"
+
+[project.urls]
+Homepage = "https://github.com/msat1971/clipse"
+Documentation = "https://github.com/msat1971/clipse/docs"
+Changelog = "https://github.com/msat1971/clipse/releases"
+
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.coverage.run]
+branch = true
+source = ["src/clipse"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py39"
+select = ["E","F","I","UP","B","SIM","PL"]
+
+[tool.mypy]
+python_version = "3.9"
+check_untyped_defs = true
+disallow_incomplete_defs = true
+warn_unused_ignores = true
+strict_optional = true
+no_implicit_optional = true
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers --disable-warnings --maxfail=1"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/clipse"]
+
+dependencies = []
+[project.optional-dependencies]
+dev = [
+  "pytest",
+  "pytest-cov",
+  "pytest-mock",
+  "mypy",
+  "ruff",
+  "build",
+  "twine",
+  "mkdocs-material",
+  "coverage[toml]>=7.6,<8",  # ← this is the equivalent of coverage = {extras=["toml"], version="^7.6"}
+]
+
+
+
+

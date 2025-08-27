@@ -1,0 +1,298 @@
+# standard_types.yaml
+# Version: 1
+
+registry:
+
+  # -------- Core scalars
+  any:
+    kind: any
+    description: Generic unconstrained value.
+
+  boolean:
+    kind: boolean
+    description: True/false flag.
+
+  string:
+    kind: string
+    description: UTF-8 string (no length constraint).
+    examples: ["hello", "main"]
+
+  string_nonempty:
+    kind: string
+    constraints:
+      pattern: ".+"
+    description: Non-empty string.
+    examples: ["prod", "v1"]
+
+  integer:
+    kind: integer
+    description: 64-bit signed integer.
+    examples: [0, 1, -1]
+
+  nonnegative_integer:
+    kind: integer
+    min: 0
+    description: Integer ≥ 0.
+    examples: [0, 42]
+
+  positive_integer:
+    kind: integer
+    min: 1
+    description: Integer ≥ 1.
+    examples: [1, 65535]
+
+  number:
+    kind: number
+    description: Double precision number.
+    examples: [3.14, -2.0]
+
+  decimal:
+    kind: decimal
+    description: Arbitrary-precision decimal (tooling may coerce to number).
+
+  count:
+    kind: integer
+    min: 0
+    description: Repeat count style (e.g., -vvv ⇒ 3).
+    examples: [0, 2, 5]
+
+  percentage:
+    kind: number
+    min: 0
+    max: 100
+    description: 0–100 inclusive.
+    examples: [0, 50, 100]
+
+  semver:
+    kind: string
+    constraints:
+      pattern: "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-[0-9A-Za-z.-]+)?(?:\\+[0-9A-Za-z.-]+)?$"
+    description: Semantic Versioning string.
+    examples: ["1.2.3", "0.9.0-beta.1+build.7"]
+
+  # -------- Dates / times
+  date:
+    kind: date
+    format: date
+    description: ISO-8601 calendar date (YYYY-MM-DD).
+    examples: ["2025-08-26"]
+
+  datetime:
+    kind: datetime
+    format: date-time
+    description: ISO-8601 timestamp.
+    examples: ["2025-08-26T10:30:00Z"]
+
+  # -------- Network / identifiers
+  url:
+    kind: url
+    format: uri
+    description: RFC 3986 URI.
+    examples: ["https://example.com/api"]
+
+  email:
+    kind: string
+    format: email
+    description: Email address.
+
+  hostname:
+    kind: string
+    format: hostname
+    description: DNS hostname.
+
+  ipv4:
+    kind: string
+    format: ipv4
+    description: IPv4 address.
+
+  ipv6:
+    kind: string
+    format: ipv6
+    description: IPv6 address.
+
+  port:
+    kind: integer
+    min: 1
+    max: 65535
+    description: TCP/UDP port.
+
+  # -------- JSON blobs
+  json:
+    kind: json
+    format: json
+    description: JSON text; tool may parse/validate downstream.
+    examples: ['{"key":"value"}']
+
+  # -------- Filesystem paths
+  path:
+    kind: path
+    format: path
+    constraints:
+      relativity: any      # relative | absolute | any
+      exists: none         # none | any | file | dir
+    description: File or directory path (may be non-existent).
+
+  path_existing:
+    kind: path
+    format: path
+    constraints:
+      relativity: any
+      exists: any
+    description: Existing path (file or directory).
+
+  abs_path:
+    kind: path
+    format: path
+    constraints:
+      relativity: absolute
+      exists: none
+    description: Absolute path (may be non-existent).
+
+  abs_path_existing:
+    kind: path
+    format: path
+    constraints:
+      relativity: absolute
+      exists: any
+    description: Existing absolute path.
+
+  rel_path:
+    kind: path
+    format: path
+    constraints:
+      relativity: relative
+      exists: none
+    description: Relative path (may be non-existent).
+
+  rel_path_existing:
+    kind: path
+    format: path
+    constraints:
+      relativity: relative
+      exists: any
+    description: Existing relative path.
+
+  file:
+    kind: file
+    format: file
+    constraints:
+      exists: none
+    description: File path (may not exist).
+
+  file_existing:
+    kind: file
+    format: file
+    constraints:
+      exists: file
+    description: Existing file path.
+
+  abs_file:
+    kind: file
+    format: file
+    constraints:
+      relativity: absolute
+      exists: none
+    description: Absolute file path (may not exist).
+
+  abs_file_existing:
+    kind: file
+    format: file
+    constraints:
+      relativity: absolute
+      exists: file
+    description: Existing absolute file.
+
+  rel_file:
+    kind: file
+    format: file
+    constraints:
+      relativity: relative
+      exists: none
+    description: Relative file path (may not exist).
+
+  rel_file_existing:
+    kind: file
+    format: file
+    constraints:
+      relativity: relative
+      exists: file
+    description: Existing relative file.
+
+  dir:
+    kind: dir
+    format: dir
+    constraints:
+      exists: none
+    description: Directory path (may not exist).
+
+  dir_existing:
+    kind: dir
+    format: dir
+    constraints:
+      exists: dir
+    description: Existing directory.
+
+  abs_dir:
+    kind: dir
+    format: dir
+    constraints:
+      relativity: absolute
+      exists: none
+    description: Absolute directory (may not exist).
+
+  abs_dir_existing:
+    kind: dir
+    format: dir
+    constraints:
+      relativity: absolute
+      exists: dir
+    description: Existing absolute directory.
+
+  rel_dir:
+    kind: dir
+    format: dir
+    constraints:
+      relativity: relative
+      exists: none
+    description: Relative directory (may not exist).
+
+  rel_dir_existing:
+    kind: dir
+    format: dir
+    constraints:
+      relativity: relative
+      exists: dir
+    description: Existing relative directory.
+
+  # -------- Collections / structures
+  object:
+    kind: object
+    description: Arbitrary key/value object.
+
+  string_list:
+    kind: list
+    of: string
+    description: List of strings.
+    examples: [["a","b","c"]]
+
+  integer_list:
+    kind: list
+    of: integer
+    description: List of integers.
+
+  path_list:
+    kind: list
+    of: path
+    description: List of filesystem paths.
+
+  file_list_existing:
+    kind: list
+    of: file_existing
+    description: List of existing files.
+
+  # Template for enums (override values in project config)
+  enum_template:
+    kind: enum
+    values: []
+    description: "Template enum; override 'values' in project config."
+

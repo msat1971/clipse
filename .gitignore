@@ -1,181 +1,243 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
+# -----------------------------------------------------------------------------
+# .gitignore
+# -----------------------------------------------------------------------------
+
+# === Python bytecode & caches ===
 *$py.class
+*.py[cod]
+*.pyd
+*.pyo
+__pycache__/
 
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
+# === Build / packaging artifacts ===
+*.egg
+*.egg-info/
+*.wheel
+*.whl
+.eggs/
+.installed.cfg
+MANIFEST
 build/
 develop-eggs/
 dist/
 downloads/
 eggs/
-.eggs/
 lib/
 lib64/
 parts/
 sdist/
 var/
-wheels/
-share/python-wheels/
-*.egg-info/
-.installed.cfg
-*.egg
-MANIFEST
 
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
+# === Virtual environments ===
+.env/
+.python-version
+.venv/
+ENV/
+env/
 pip-log.txt
-pip-delete-this-directory.txt
+pip-wheel-metadata/
+venv/
 
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.nox/
+# === Testing & coverage ===
 .coverage
 .coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*.cover
-*.py,cover
+.dmypy.json
 .hypothesis/
+.mypy_cache/
+.nox/
+.pyre/
 .pytest_cache/
-cover/
+.pytype/
+.ruff_cache/
+.tox/
+coverage.xml
+dmypy.json
+htmlcov/
+pytestdebug.log
 
-# Translations
-*.mo
-*.pot
+# === Jupyter notebooks ===
+**/.ipynb_checkpoints/
+.ipynb_checkpoints/
+.jupyter/
 
-# Django stuff:
+# === Django / Flask (if used) ===
 *.log
-local_settings.py
-db.sqlite3
-db.sqlite3-journal
-
-# Flask stuff:
-instance/
 .webassets-cache
+db.sqlite3
+instance/
+local_settings.py
 
-# Scrapy stuff:
-.scrapy
+# === Data / artifacts (keep .gitkeep) ===
+!data/.gitkeep
+data/*
+models/
+outputs/
+reports/
 
-# Sphinx documentation
-docs/_build/
+# === Editors / IDEs ===
+*.sublime-project
+*.sublime-workspace
+.classpath
+.history/
+.idea/
+.metadata/
+.project
+.settings/
+.vscode/
+nbproject/
 
-# PyBuilder
-.pybuilder/
-target/
+# === Operating systems ===
+$RECYCLE.BIN/
+.DS_Store
+.Spotlight-V100
+.Trashes
+Desktop.ini
+Thumbs.db
+ehthumbs.db
 
-# Jupyter Notebook
-.ipynb_checkpoints
+# === Node / JS (if present) ===
+.parcel-cache/
+.pnpm-store/
+# build/
+coverage-final.json
+# dist/
+node_modules/
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 
-# IPython
-profile_default/
-ipython_config.py
+# === Serverless / IaC (if present) ===
+.aws-sam/
+.serverless/
+.terraform/
+cdk.out/
+terraform.tfstate
+terraform.tfstate.*
 
-# pyenv
-#   For a library or package, you might want to ignore these files since the code is
-#   intended to run in multiple environments; otherwise, check them in:
-# .python-version
+# === Project tooling ===
+.cache/
+.direnv/
+.envrc
+.pre-commit-cache/
+.pre-commit-config.yaml~
+.tmp/
+tmp/
 
-# pipenv
-#   According to pypa/pipenv#598, it is recommended to include Pipfile.lock in version control.
-#   However, in case of collaboration, if having platform-specific dependencies or dependencies
-#   having no cross-platform support, pipenv may install dependencies that don't work, or not
-#   install all needed dependencies.
-#Pipfile.lock
-
-# UV
-#   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#uv.lock
-
-# poetry
-#   Similar to Pipfile.lock, it is generally recommended to include poetry.lock in version control.
-#   This is especially recommended for binary packages to ensure reproducibility, and is more
-#   commonly ignored for libraries.
-#   https://python-poetry.org/docs/basic-usage/#commit-your-poetrylock-file-to-version-control
-#poetry.lock
-
-# pdm
-#   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
-#pdm.lock
-#   pdm stores project-wide configurations in .pdm.toml, but it is recommended to not include it
-#   in version control.
-#   https://pdm.fming.dev/latest/usage/project/#working-with-version-control
-.pdm.toml
-.pdm-python
-.pdm-build/
-
-# PEP 582; used by e.g. github.com/David-OConnor/pyflow and github.com/pdm-project/pdm
-__pypackages__/
-
-# Celery stuff
-celerybeat-schedule
-celerybeat.pid
-
-# SageMath parsed files
+# === Project-specific ===
+!.github/workflows/lib
+!.vscode/extensions.json
+!.vscode/launch.json
+!.vscode/tasks.json
+# !404.html
+!docs/overrides/*.html
+*.cab
+*.cover
+*.html
+*.iws
+*.lnk
+*.manifest
+*.mo
+*.msi
+*.msix
+*.msm
+*.msp
+*.pot
 *.sage.py
-
-# Environments
+*.so
+*.spec
+*.stackdump
+*.swp
+*~
+.AppleDB
+.AppleDesktop
+.AppleDouble
+.DocumentRevisions-V100
+.LSOverride
+.Python
+.TemporaryItems
+.Trash-*
+.VolumeIcon.icns
+._*
+.amazonq
+.apdisk
+.cache
+.cdk
+.claude
+.com.apple.timemachine.donotpresent
+.directory
 .env
-.venv
-env/
-venv/
-ENV/
-env.bak/
-venv.bak/
-
-# Spyder project settings
+.fseventsd
+.fuse_hidden*
+.github/instructions
+.history
+.idea/**/contentModel.xml
+.idea/**/dataSources.ids
+.idea/**/dataSources.local.xml
+.idea/**/dataSources/
+.idea/**/dbnavigator.xml
+.idea/**/dictionaries
+.idea/**/dynamic.xml
+.idea/**/gradle.xml
+.idea/**/libraries
+.idea/**/mongoSettings.xml
+.idea/**/shelf
+.idea/**/sqlDataSources.xml
+.idea/**/tasks.xml
+.idea/**/uiDesigner.xml
+.idea/**/usage.statistics.xml
+.idea/**/workspace.xml
+.idea/caches/build_file_checksums.ser
+.idea/httpRequests
+.idea/replstate.xml
+.idea/sonarlint
+.idea_modules/
+.ipynb_checkpoints
+.kiro
+.nfs*
+.ropeproject
+.scrapy
 .spyderproject
 .spyproject
-
-# Rope project settings
-.ropeproject
-
-# mkdocs documentation
+.venv
+.vscode
+.vscode/*
+/.idea/*
 /site
+Icon
+Network Trash Folder
+TMP_CHANGELOG.md
+Temporary Items
+Thumbs.db:encryptable
+[Dd]esktop.ini
+api/
+atlassian-ide-plugin.xml
+cdk.context.json
+cdk.out
+celerybeat-schedule
+cmake-build-*/
+com_crashlytics_export_strings.xml
+crashlytics-build.properties
+crashlytics.properties
+db.sqlite3-journal
+docs/.cache/
+docs/_build/
+docs/public
+ehthumbs_vista.db
+env.bak/
+examples/**/sam/.aws-sam
+fabric.properties
+ipython_config.py
+node_modules
+nosetests.xml
+out/
+pip-delete-this-directory.txt
+profile_default/
+share/python-wheels/
+site/
+target/
+test_report
+venv.bak/
+wheelhouse
+wheels/
 
-# mypy
-.mypy_cache/
-.dmypy.json
-dmypy.json
-
-# Pyre type checker
-.pyre/
-
-# pytype static type analyzer
-.pytype/
-
-# Cython debug symbols
-cython_debug/
-
-# PyCharm
-#  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
-#  be found at https://github.com/github/gitignore/blob/main/Global/JetBrains.gitignore
-#  and can be added to the global gitignore or merged into this file.  For a more nuclear
-#  option (not recommended) you can uncomment the following to ignore the entire idea folder.
-#.idea/
-
-# Ruff stuff:
-.ruff_cache/
-
-# PyPI configuration file
-.pypirc
-
-# Cursor  
-#  Cursor is an AI-powered code editor.`.cursorignore` specifies files/directories to 
-#  exclude from AI features like autocomplete and code analysis. Recommended for sensitive data
-#  refer to https://docs.cursor.com/context/ignore-files
-.cursorignore
-.cursorindexingignore
