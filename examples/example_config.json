@@ -1,5 +1,5 @@
 {
-  "clipse_version": "https://json-schema.org/draft/2020-12/schema",
+  "clipse_version": "https://github.com/msat1971/clipse/blob/develop/schema/clipse.schema.1.0.0.json",
   "title": "Example configuration file",
   "behavior": {
     "allow_abbrev": false,
@@ -115,19 +115,17 @@
           "rm"
         ],
         "description_short": "Delete resource.",
-        "options": [
-          {
-            "id": "force",
+        "options": {
+          "force": {
             "$ref": "#/shared_defs/options/force"
           }
-        ]
+        }
       }
     }
   },
   "global": {
-    "options": [
-      {
-        "id": "help",
+    "options": {
+      "help": {
         "names": [
           "-h",
           "--help",
@@ -138,8 +136,7 @@
         "type": "boolean",
         "description_short": "Show help and exit."
       },
-      {
-        "id": "version",
+      "version": {
         "names": [
           "--version"
         ],
@@ -148,8 +145,7 @@
         "type": "boolean",
         "description_short": "Show version information and exit."
       },
-      {
-        "id": "verbose",
+      "verbose": {
         "names": [
           "-v",
           "--verbose"
@@ -160,25 +156,22 @@
         "default": 0,
         "description_short": "Increase verbosity (repeatable)."
       }
-    ]
+    }
   },
-  "objects": [
-    {
-      "id": "foo",
+  "objects": {
+    "foo": {
       "names": [
         "foo"
       ],
       "description_short": "Manage {{id}}(s).",
       "default_action": "list",
-      "actions": [
-        {
-          "id": "create",
+      "actions": {
+        "create": {
           "$ref": "#/shared_defs/actions/create",
           "description_short": "Create a foo.",
           "description_long": "Create a foo by...",
-          "options": [
-            {
-              "id": "name",
+          "options": {
+            "name": {
               "names": [
                 "-n",
                 "--name"
@@ -190,17 +183,14 @@
               "value_name": "NAME",
               "description_short": "Foo name."
             },
-            {
-              "id": "dir",
+            "dir": {
               "$ref": "#/shared_defs/options/dir",
               "description_short": "Target directory (absolute, must exist)."
             },
-            {
-              "id": "template",
+            "template": {
               "$ref": "#/shared_defs/options/template"
             },
-            {
-              "id": "from_config",
+            "from_config": {
               "names": [
                 "--from-config"
               ],
@@ -216,8 +206,7 @@
               "env": "YOURCLI_CONFIG",
               "description_short": "Read parameters from JSON config file."
             },
-            {
-              "id": "yes",
+            "yes": {
               "names": [
                 "-y",
                 "--yes"
@@ -227,8 +216,7 @@
               "type": "boolean",
               "description_short": "Assume 'yes' to all prompts."
             },
-            {
-              "id": "from_stdin",
+            "from_stdin": {
               "names": [
                 "--from-stdin"
               ],
@@ -237,10 +225,9 @@
               "type": "boolean",
               "description_short": "Read spec from STDIN (JSON)."
             }
-          ],
-          "positionals": [
-            {
-              "id": "extra_files",
+          },
+          "positionals": {
+            "extra_files": {
               "name": "EXTRA_FILES",
               "kind": "positional",
               "type": {
@@ -252,7 +239,7 @@
               "arity": "0..*",
               "description_short": "Optional extra files to include."
             }
-          ],
+          },
           "constraints": {
             "requires": [
               "name"
@@ -295,45 +282,39 @@
             }
           }
         },
-        {
-          "id": "delete",
+        "delete": {
           "$ref": "#/shared_defs/actions/delete",
           "description_short": "Delete a foo.",
-          "positionals": [
-            {
-              "id": "foo_ref",
+          "positionals": {
+            "foo_ref": {
               "name": "FOO",
               "kind": "positional",
               "type": "string",
               "required": true
             }
-          ]
+          }
         }
-      ]
+      }
     },
-    {
-      "id": "bar",
+    "bar": {
       "names": [
         "bar"
       ],
       "description_short": "Bar(s)"
     }
-  ],
-  "actions": [
-    {
-      "id": "list",
+  },
+  "actions": {
+    "list": {
       "names": [
         "list",
         "ls"
       ],
       "description_short": "List object(s).",
-      "objects": [
-        {
-          "id": "bar",
+      "objects": {
+        "bar": {
           "description_short": "Lists bar(s)",
-          "options": [
-            {
-              "id": "name",
+          "options": {
+            "name": {
               "names": [
                 "-n",
                 "--name"
@@ -345,14 +326,12 @@
               "required": true,
               "value_name": "NAME"
             }
-          ]
+          }
         },
-        {
-          "id": "foo",
+        "foo": {
           "description_short": "Lists foo(s)",
-          "options": [
-            {
-              "id": "name",
+          "options": {
+            "name": {
               "names": [
                 "-n",
                 "--name"
@@ -364,10 +343,10 @@
               "required": true,
               "value_name": "NAME"
             }
-          ]
+          }
         }
-      ],
+      },
       "default_object": "foo"
     }
-  ]
+  }
 }
