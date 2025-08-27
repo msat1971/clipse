@@ -11,7 +11,7 @@ This guide explains how to write a **style‑agnostic** CLI config using the *ob
 
 A config has these top‑level sections:
 
-```jsonc
+```json5
 {
   "title": "...",                // optional metadata
   "description": "...",          // optional metadata
