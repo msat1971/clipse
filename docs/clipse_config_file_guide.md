@@ -104,18 +104,18 @@ objects:
 ## 4) Types & Environment Variables
 
 **Types**
-```json
+```jsonc
 { "type": "string" }
 { "type": { "kind": "enum", "values": ["basic","web","api"] } }
 { "type": { "kind": "list", "of": { "kind": "path" } } }
 ```
 
 **Environment binding**
-```json
+```jsonc
 "env": "YOURCLI_DIR"
 ```
 equals
-```json
+```jsonc
 "env": { "var": "YOURCLI_DIR", "override_cli": false, "update": false }
 ```
 
