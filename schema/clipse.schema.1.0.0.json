@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/cli-objects-actions.schema.json",
-  "title": "CLI Objects/Actions Specification",
+  "$id": "https://example.com/schemas/clipse-objects-actions.v1.json",
+  "title": "Clipse Objects/Actions Configuration",
   "type": "object",
   "required": [
     "global",
@@ -39,21 +39,18 @@
         },
         "options": {
           "type": "object",
-          "description": "Reusable option blueprints (NO id required here).",
           "additionalProperties": {
             "$ref": "#/$defs/optionDefNoId"
           }
         },
         "actions": {
           "type": "object",
-          "description": "Reusable action blueprints (NO id required here).",
           "additionalProperties": {
             "$ref": "#/$defs/actionDefNoId"
           }
         },
         "objects": {
           "type": "object",
-          "description": "Reusable object blueprints (NO id required here).",
           "additionalProperties": {
             "$ref": "#/$defs/objectDefNoId"
           }
@@ -195,7 +192,6 @@
     },
     "objects": {
       "type": "array",
-      "minItems": 0,
       "items": {
         "$ref": "#/$defs/objectUse"
       },
@@ -203,7 +199,6 @@
     },
     "actions": {
       "type": "array",
-      "minItems": 0,
       "items": {
         "$ref": "#/$defs/actionUse"
       },
@@ -294,71 +289,6 @@
           "additionalProperties": true
         }
       }
-    },
-    "exampleScenario": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "object": {
-          "type": "string"
-        },
-        "action": {
-          "type": "string"
-        },
-        "globals": {
-          "type": "object",
-          "additionalProperties": true
-        },
-        "options": {
-          "type": "object",
-          "additionalProperties": true
-        },
-        "positionals": {
-          "type": "object",
-          "additionalProperties": true
-        },
-        "stdin": {
-          "type": "object",
-          "additionalProperties": false,
-          "properties": {
-            "use": {
-              "type": "boolean",
-              "default": false
-            },
-            "content_type": {
-              "type": "string"
-            },
-            "payload": {
-              "type": "string"
-            }
-          }
-        },
-        "env": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "var",
-              "value"
-            ],
-            "properties": {
-              "var": {
-                "type": "string"
-              },
-              "value": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
-      "required": [
-        "object",
-        "action"
-      ]
     },
     "constraints": {
       "type": "object",
@@ -530,6 +460,11 @@
     "optionDefNoId": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "names",
+        "kind",
+        "description_short"
+      ],
       "properties": {
         "names": {
           "type": "array",
@@ -570,12 +505,7 @@
         "env": {
           "$ref": "#/$defs/envDef"
         }
-      },
-      "required": [
-        "names",
-        "kind",
-        "description_short"
-      ]
+      }
     },
     "optionUse": {
       "allOf": [
@@ -644,6 +574,10 @@
     "actionDefNoId": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "names",
+        "description_short"
+      ],
       "properties": {
         "names": {
           "type": "array",
@@ -677,12 +611,15 @@
         },
         "io": {
           "$ref": "#/$defs/ioHints"
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
         }
-      },
-      "required": [
-        "names",
-        "description_short"
-      ]
+      }
     },
     "actionRefOrOverride": {
       "type": "object",
@@ -732,37 +669,7 @@
         "examples": {
           "type": "array",
           "items": {
-            "oneOf": [
-              {
-                "type": "object",
-                "required": [
-                  "description",
-                  "scenario"
-                ],
-                "properties": {
-                  "description": {
-                    "type": "string"
-                  },
-                  "scenario": {
-                    "$ref": "#/$defs/exampleScenario"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "cmd"
-                ],
-                "properties": {
-                  "cmd": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
-                }
-              }
-            ]
+            "type": "string"
           },
           "default": []
         }
@@ -870,37 +777,7 @@
                   "examples": {
                     "type": "array",
                     "items": {
-                      "oneOf": [
-                        {
-                          "type": "object",
-                          "required": [
-                            "description",
-                            "scenario"
-                          ],
-                          "properties": {
-                            "description": {
-                              "type": "string"
-                            },
-                            "scenario": {
-                              "$ref": "#/$defs/exampleScenario"
-                            }
-                          }
-                        },
-                        {
-                          "type": "object",
-                          "required": [
-                            "cmd"
-                          ],
-                          "properties": {
-                            "cmd": {
-                              "type": "string"
-                            },
-                            "description": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      ]
+                      "type": "string"
                     },
                     "default": []
                   }
@@ -916,37 +793,7 @@
         "examples": {
           "type": "array",
           "items": {
-            "oneOf": [
-              {
-                "type": "object",
-                "required": [
-                  "description",
-                  "scenario"
-                ],
-                "properties": {
-                  "description": {
-                    "type": "string"
-                  },
-                  "scenario": {
-                    "$ref": "#/$defs/exampleScenario"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "cmd"
-                ],
-                "properties": {
-                  "cmd": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
-                }
-              }
-            ]
+            "type": "string"
           },
           "default": []
         }
@@ -955,6 +802,10 @@
     "objectDefNoId": {
       "type": "object",
       "additionalProperties": false,
+      "required": [
+        "names",
+        "description_short"
+      ],
       "properties": {
         "names": {
           "type": "array",
@@ -998,12 +849,15 @@
         },
         "default_action": {
           "type": "string"
+        },
+        "examples": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "default": []
         }
-      },
-      "required": [
-        "names",
-        "description_short"
-      ]
+      }
     },
     "objectUse": {
       "type": "object",
@@ -1065,37 +919,7 @@
         "examples": {
           "type": "array",
           "items": {
-            "oneOf": [
-              {
-                "type": "object",
-                "required": [
-                  "description",
-                  "scenario"
-                ],
-                "properties": {
-                  "description": {
-                    "type": "string"
-                  },
-                  "scenario": {
-                    "$ref": "#/$defs/exampleScenario"
-                  }
-                }
-              },
-              {
-                "type": "object",
-                "required": [
-                  "cmd"
-                ],
-                "properties": {
-                  "cmd": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  }
-                }
-              }
-            ]
+            "type": "string"
           },
           "default": []
         }
