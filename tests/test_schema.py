@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from clipse.core import load_config
-from clipse.schema import validate_core_config
+from dclipse.core import load_config
+from dclipse.schema import validate_core_config
 
 
 def test_example_config_validates() -> None:

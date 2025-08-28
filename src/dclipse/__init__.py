@@ -1,7 +1,7 @@
-"""Public package interface for clipse.
+"""Public package interface for dclipse.
 
 Examples:
-    >>> from clipse import __version__, load_config  # doctest: +SKIP
+    >>> from dclipse import __version__, load_config  # doctest: +SKIP
     >>> isinstance(__version__, str)
     True
 """

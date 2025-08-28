@@ -6,7 +6,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from clipse import core
+from dclipse import core
 
 if TYPE_CHECKING:  # pragma: no cover
     from pathlib import Path

@@ -3,7 +3,7 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "clipse"
+name = "dclipse"
 version = "0.1.0"
 description = "Command Line Interface Specification Engine"
 readme = "README.md"
@@ -24,29 +24,27 @@ classifiers = [
   "Typing :: Typed"
 ]
 
-
 dependencies = [
   "jsonschema>=4.18",
   "PyYAML>=6.0",
 ]
 
 [project.scripts]
-clipse = "clipse.cli:main"
+dclipse = "dclipse.cli:main"
 
 [project.urls]
-Homepage = "https://github.com/msat1971/clipse"
-Documentation = "https://msat1971.github.io/clipse/"
-Changelog = "https://github.com/msat1971/clipse/releases"
-
+Homepage = "https://github.com/msat1971/dclipse"
+Documentation = "https://msat1971.github.io/dclipse/"
+Changelog = "https://github.com/msat1971/dclipse/releases"
 
 [tool.pytest.ini_options]
-addopts = "-q --strict-markers --disable-warnings --maxfail=1 --cov=src/clipse --cov-branch --cov-report=term-missing"
+addopts = "-q --strict-markers --disable-warnings --maxfail=1 --cov=src/dclipse --cov-branch --cov-report=term-missing"
 testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.coverage.run]
 branch = true
-source = ["src/clipse"]
+source = ["src/dclipse"]
 
 [tool.coverage.report]
 fail_under = 90
@@ -71,14 +69,15 @@ warn_unused_configs = true
 show_error_codes = true
 
 [tool.hatch.build.targets.wheel]
-packages = ["src/clipse"]
+packages = ["src/dclipse"]
 
 [tool.hatch.build]
 include = [
-  "src/clipse/schema/clipse.schema.1.0.0.json",
-  "src/clipse/schema/clipse_style.schema.1.0.0.json",
-  "src/clipse/py.typed",
+  "src/dclipse/schema/dclipse.schema.1.0.0.json",
+  "src/dclipse/schema/dclipse_style.schema.1.0.0.json",
+  "src/dclipse/py.typed",
 ]
+
 [project.optional-dependencies]
 dev = [
   "pytest",

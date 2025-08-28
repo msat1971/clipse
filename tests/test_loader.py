@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 if TYPE_CHECKING:  # pragma: no cover - typing-only import
     from pathlib import Path
 
-from clipse.core import load_config
+from dclipse.core import load_config
 
 
 def test_load_config_json_and_yaml(tmp_path: Path) -> None:

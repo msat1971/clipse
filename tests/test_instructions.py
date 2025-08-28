@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from clipse.instructions import IntegrationInstructions, detect_project_style, generate_instructions
+from dclipse.instructions import IntegrationInstructions, detect_project_style, generate_instructions
 
 
 def test_generate_instructions_defaults() -> None:

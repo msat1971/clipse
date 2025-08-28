@@ -1,4 +1,4 @@
-"""Command-line interface for clipse.
+"""Command-line interface for dclipse.
 
 Provides commands to:
 - validate a config against the core schema
@@ -9,7 +9,7 @@ Provides commands to:
 Examples:
     Validate a config file:
 
-    >>> from clipse.cli import cmd_validate  # doctest: +SKIP
+    >>> from dclipse.cli import cmd_validate  # doctest: +SKIP
     >>> rc = cmd_validate("./examples/example_config.json")  # doctest: +SKIP
     >>> rc in (0,)  # doctest: +SKIP
     True
@@ -36,23 +36,23 @@ def _discover_config_path(explicit: Path | None) -> Path:
 
     Discovery order:
       1) explicit `--config`
-      2) env var `CLIPSE_APP_CONFIG`
-      3) local file `./.clipse`
-      4) local file `./clipse`
+      2) env var `DCLIPSE_APP_CONFIG`
+      3) local file `./.dclipse`
+      4) local file `./dclipse`
 
     Raises FileNotFoundError if none are found.
     """
-    # Discovery order: 1) --config 2) env CLIPSE_APP_CONFIG 3) ./.clipse 4) ./clipse
+    # Discovery order: 1) --config 2) env DCLIPSE_APP_CONFIG 3) ./.dclipse 4) ./dclipse
     if explicit:
         return explicit
-    if env_val := os.getenv("CLIPSE_APP_CONFIG"):
+    if env_val := os.getenv("DCLIPSE_APP_CONFIG"):
         p = Path(env_val).expanduser()
         if p.exists():
             return p
-    for cand in (Path(".clipse"), Path("clipse")):
+    for cand in (Path(".dclipse"), Path("dclipse")):
         if cand.exists():
             return cand
-    raise FileNotFoundError("No config found. Use --config or set CLIPSE_APP_CONFIG or place ./.clipse")
+    raise FileNotFoundError("No config found. Use --config or set DCLIPSE_APP_CONFIG or place ./.dclipse")
 
 
 def cmd_validate(config_path: str | None) -> int:
@@ -127,7 +127,7 @@ def cmd_generate(config_path: str | None, out_dir: str, style_file: str | None) 
         (
             """Generated CLI package scaffold.
 
-This package is produced by clipse's 'generate' command.
+This package is produced by dclipse's 'generate' command.
 """
             "\n__all__ = []\n"
         ),
@@ -219,14 +219,14 @@ def cmd_list_styles() -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Build and return the top-level argparse parser for clipse.
+    """Build and return the top-level argparse parser for dclipse.
 
     Examples:
         >>> p = build_parser()
         >>> isinstance(p, argparse.ArgumentParser)
         True
     """
-    p = argparse.ArgumentParser(prog="clipse", description="Clipse generator")
+    p = argparse.ArgumentParser(prog="dclipse", description="Dclipse generator")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     v = sub.add_parser("validate", help="Validate a config against the core schema")
