@@ -21,7 +21,6 @@ import argparse
 import json
 import os
 from pathlib import Path
-from typing import Optional
 
 from .core import load_config
 from .instructions import generate_instructions
@@ -32,7 +31,7 @@ from .style_loader import discover_style_path
 BUILTIN_STYLES = ["noun-verb", "verb-noun", "unix", "shell"]
 
 
-def _discover_config_path(explicit: Optional[Path]) -> Path:
+def _discover_config_path(explicit: Path | None) -> Path:
     """Resolve the config path using discovery rules.
 
     Discovery order:
@@ -57,7 +56,7 @@ def _discover_config_path(explicit: Optional[Path]) -> Path:
     raise FileNotFoundError("No config found. Use --config or set CLIPSE_APP_CONFIG or place ./.clipse")
 
 
-def cmd_validate(config_path: Optional[str]) -> int:
+def cmd_validate(config_path: str | None) -> int:
     """Validate the config file against the core schema.
 
     Prints a success message on validation. Returns 0 on success.
@@ -74,7 +73,7 @@ def cmd_validate(config_path: Optional[str]) -> int:
     return 0
 
 
-def cmd_explain(config_path: Optional[str], fmt: str) -> int:
+def cmd_explain(config_path: str | None, fmt: str) -> int:
     """Resolve and print the effective config.
 
     fmt: "json" or "text". Returns 0 on success.
@@ -104,7 +103,7 @@ def _write_file(p: Path, content: str) -> None:
     p.write_text(content, encoding="utf-8")
 
 
-def cmd_generate(config_path: Optional[str], out_dir: str, style_file: Optional[str]) -> int:
+def cmd_generate(config_path: str | None, out_dir: str, style_file: str | None) -> int:
     """Generate a minimal runnable CLI package scaffold.
 
     Validates the provided config, creates the output package directory,
@@ -247,7 +246,7 @@ def build_parser() -> argparse.ArgumentParser:
     return p
 
 
-def main(argv: Optional[list[str]] = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     """CLI entrypoint. Parses args and dispatches to subcommands."""
     parser = build_parser()
     ns = parser.parse_args(argv)

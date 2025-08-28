@@ -10,7 +10,7 @@ import importlib.util
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional, Protocol
+from typing import TYPE_CHECKING, Any, Protocol
 
 if TYPE_CHECKING:  # pragma: no cover - typing-only import
     from types import ModuleType
@@ -26,7 +26,7 @@ class RenderFn(Protocol):
         resolved_model: Any,
         *,
         package_name: str,
-        engine: Optional[str] = None,
+        engine: str | None = None,
     ) -> dict[str, str]:
         """Render files for the resolved model into a mapping of paths->contents."""
 
@@ -38,8 +38,8 @@ class LoadedStyle:
     name: str
     source: Path
     is_python_module: bool
-    module: Optional[ModuleType]
-    config: Optional[dict[str, Any]]
+    module: ModuleType | None
+    config: dict[str, Any] | None
 
     def render(self) -> RenderFn:
         """Return the ``render`` callable from the loaded Python module.
@@ -85,10 +85,10 @@ def _discover_project_root(start: Path) -> Path:
 
 def discover_style_path(
     *,
-    explicit_path: Optional[Path],
+    explicit_path: Path | None,
     env_var: str = "CLIPSE_STYLE_FILE",
-    cwd: Optional[Path] = None,
-) -> Optional[Path]:
+    cwd: Path | None = None,
+) -> Path | None:
     """Discover the style file path to use.
 
     Discovery order:
@@ -118,7 +118,7 @@ def discover_style_path(
     return None
 
 
-def load_style(explicit_path: Optional[Path] = None) -> LoadedStyle:
+def load_style(explicit_path: Path | None = None) -> LoadedStyle:
     """Load a style definition from the discovered path.
 
     Supports:

@@ -8,19 +8,19 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
 
 @dataclass(frozen=True)
 class IntegrationInstructions:
     """Container for integration snippets for a generated CLI."""
+
     package_manager: str
     install_snippet: str
     entrypoint_snippet: str
     ci_snippet: str
 
 
-def detect_project_style(root: Optional[Path] = None) -> str:
+def detect_project_style(root: Path | None = None) -> str:
     """Detect the host project's packaging style.
 
     Args:
@@ -39,7 +39,8 @@ def detect_project_style(root: Optional[Path] = None) -> str:
 
 
 def generate_instructions(
-    project_style: Optional[str] = None, package: str = "generated_cli",
+    project_style: str | None = None,
+    package: str = "generated_cli",
 ) -> IntegrationInstructions:
     """Build install, entrypoint, and CI snippets for the given style.
 

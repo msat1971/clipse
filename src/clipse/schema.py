@@ -26,6 +26,7 @@ _STYLE_SCHEMA_NAME = "clipse_style.schema.1.0.0.json"
 @dataclass(frozen=True)
 class SchemaPaths:
     """Holds Traversable handles for packaged core and style schemas."""
+
     core: Traversable
     style: Traversable
 

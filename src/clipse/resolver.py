@@ -11,7 +11,7 @@ import os
 import re
 from collections.abc import Mapping
 from dataclasses import dataclass
-from typing import Any, Optional
+from typing import Any
 
 from .schema import validate_core_config
 
@@ -22,6 +22,7 @@ _VAR_RE = re.compile(r"\{\{\s*vars\.([a-zA-Z0-9_\-]+)\s*\}\}")
 @dataclass(frozen=True)
 class ResolutionResult:
     """Result of resolving a config: the resolved doc and any issues."""
+
     resolved: dict[str, Any]
     issues: list[str]
 
@@ -67,8 +68,9 @@ def _merge(a: Mapping[str, Any], b: Mapping[str, Any]) -> dict[str, Any]:
     return out
 
 
-def _render_vars_in_str(s: str, vars_map: Mapping[str, Any], *, id_value: Optional[str] = None) -> str:
+def _render_vars_in_str(s: str, vars_map: Mapping[str, Any], *, id_value: str | None = None) -> str:
     """Render ``{{vars.KEY}}`` and optional ``{{id}}`` placeholders in a string."""
+
     def rep(m: re.Match[str]) -> str:
         key = m.group(1)
         val = vars_map.get(key)
@@ -80,7 +82,7 @@ def _render_vars_in_str(s: str, vars_map: Mapping[str, Any], *, id_value: Option
     return s2
 
 
-def _render_vars_in_obj(obj: Any, vars_map: Mapping[str, Any], *, id_value: Optional[str] = None) -> Any:
+def _render_vars_in_obj(obj: Any, vars_map: Mapping[str, Any], *, id_value: str | None = None) -> Any:
     """Recursively render placeholders within strings nested in ``obj``."""
     if isinstance(obj, str):
         return _render_vars_in_str(obj, vars_map, id_value=id_value)
@@ -121,6 +123,7 @@ def _validate_constraints(selected: list[str], constraints: Mapping[str, Any]) -
 
 def _apply_refs(doc: dict[str, Any]) -> dict[str, Any]:
     """Walk objects/actions and expand local ``$ref`` with shallow-merge overrides."""
+
     def process_mapping(mapping: dict[str, Any]) -> dict[str, Any]:
         out: dict[str, Any] = {}
         for key, val in mapping.items():
@@ -149,7 +152,7 @@ def _apply_refs(doc: dict[str, Any]) -> dict[str, Any]:
     return resolved
 
 
-def resolve_config(raw: dict[str, Any], *, env: Optional[Mapping[str, str]] = None) -> ResolutionResult:
+def resolve_config(raw: dict[str, Any], *, env: Mapping[str, str] | None = None) -> ResolutionResult:
     """Resolve a raw config and collect any constraint issues.
 
     Steps:
