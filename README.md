@@ -1,5 +1,7 @@
 <!-- markdownlint-disable MD013 MD041 MD043  -->
-# Dclipse (Command Line Interface Specification Engine)
+<img src="docs/assets/images/Logo_dclipse-horizontal_White.svg" alt="Dclipse logo" width="300">
+
+# DAWG’s CLI Specification Engine
 
 [![Build](https://github.com/msat1971/dclipse/actions/workflows/ci.yml/badge.svg)](https://github.com/msat1971/dclipse/actions/workflows/ci.yml) [![codecov.io](https://codecov.io/github/msat1971/dclipse/actions/branch/develop/graphs/badge.svg)](https://app.codecov.io/gh/msat1971/dclipse) ![PythonSupport](https://img.shields.io/static/v1?label=python&message=%203.9|%203.10|%203.11|%203.12|%203.13&color=blue?style=flat-square&logo=python)
 
