@@ -16,7 +16,7 @@ try:
 except Exception:  # pragma: no cover - optional
     yaml = None  # YAML is optional; tests will skip if missing
 
-from jsonschema import Draft202012Validator, ValidationError  # type: ignore[import-untyped]
+from jsonschema import Draft202012Validator, ValidationError  # type: ignore
 
 _SCHEMA_DIR = "schema"
 _CORE_SCHEMA_NAME = "clipse.schema.1.0.0.json"
