@@ -35,18 +35,22 @@ clipse = "clipse.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/msat1971/clipse"
-Documentation = "https://github.com/msat1971/clipse/docs"
+Documentation = "https://msat1971.github.io/clipse/"
 Changelog = "https://github.com/msat1971/clipse/releases"
 
 
 [tool.pytest.ini_options]
-addopts = "-q --strict-markers --disable-warnings --maxfail=1"
+addopts = "-q --strict-markers --disable-warnings --maxfail=1 --cov=src/clipse --cov-branch --cov-report=term-missing"
 testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.coverage.run]
 branch = true
 source = ["src/clipse"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
 
 [tool.ruff]
 line-length = 100
@@ -60,6 +64,11 @@ disallow_incomplete_defs = true
 warn_unused_ignores = true
 strict_optional = true
 no_implicit_optional = true
+disallow_untyped_defs = true
+warn_return_any = true
+no_implicit_reexport = true
+warn_unused_configs = true
+show_error_codes = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/clipse"]

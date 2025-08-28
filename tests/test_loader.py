@@ -1,6 +1,9 @@
 from __future__ import annotations
 
-from pathlib import Path
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:  # pragma: no cover - typing-only import
+    from pathlib import Path
 
 from clipse.core import load_config
 

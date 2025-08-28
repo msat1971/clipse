@@ -241,3 +241,5 @@ venv.bak/
 wheelhouse
 wheels/
 
+/project_prompt_notes.md
+

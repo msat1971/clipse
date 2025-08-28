@@ -1,3 +1,5 @@
+> NOTE: This guide is being consolidated into the new Getting started → Configuring docs.
+> Prefer: getting-started/configuring.md and docs/schema/index.md for schemas.
 
 # Clipse Config: Objects & Actions – Authoring Guide
 

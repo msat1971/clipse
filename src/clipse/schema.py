@@ -1,11 +1,15 @@
+"""Schema utilities: locate packaged JSON Schemas and validate configs/styles."""
+
 from __future__ import annotations
 
 import json
 from dataclasses import dataclass
 from importlib import resources
-from importlib.resources.abc import Traversable
-from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import TYPE_CHECKING, Any
+
+if TYPE_CHECKING:  # pragma: no cover - typing-only imports
+    from importlib.resources.abc import Traversable
+    from pathlib import Path
 
 try:
     import yaml  # type: ignore
@@ -21,6 +25,7 @@ _STYLE_SCHEMA_NAME = "clipse_style.schema.1.0.0.json"
 
 @dataclass(frozen=True)
 class SchemaPaths:
+    """Holds Traversable handles for packaged core and style schemas."""
     core: Traversable
     style: Traversable
 
@@ -43,12 +48,19 @@ def get_schema_paths() -> SchemaPaths:
     return SchemaPaths(core=core, style=style)
 
 
-def _load_json(path: Traversable) -> Dict[str, Any]:
+def _load_json(path: Traversable) -> dict[str, Any]:
+    """Load a JSON document from a package resource path."""
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def _load_json_or_yaml(path: Path) -> Dict[str, Any]:
+def _load_json_or_yaml(path: Path) -> dict[str, Any]:
+    """Load JSON or YAML from a filesystem path, enforcing a mapping at top level.
+
+    Raises:
+        RuntimeError: If YAML is requested but PyYAML is not installed.
+        ValueError: For unsupported extensions or non-mapping YAML content.
+    """
     suffix = path.suffix.lower()
     if suffix in (".json",):
         return _load_json(path)
@@ -64,25 +76,25 @@ def _load_json_or_yaml(path: Path) -> Dict[str, Any]:
 
 
 def _validator(schema_path: Traversable) -> Draft202012Validator:
+    """Build a JSON Schema validator for the given packaged schema."""
     schema = _load_json(schema_path)
     return Draft202012Validator(schema)
 
 
-def validate_core_config(config: Dict[str, Any]) -> None:
+def validate_core_config(config: dict[str, Any]) -> None:
     """Validate a resolved clipse config against the authoritative core schema."""
     v = _validator(get_schema_paths().core)
     v.validate(config)
 
 
-def validate_style_config(style_obj: Dict[str, Any]) -> None:
+def validate_style_config(style_obj: dict[str, Any]) -> None:
     """Validate a declarative style object (JSON/YAML) against the style schema."""
     v = _validator(get_schema_paths().style)
     v.validate(style_obj)
 
 
-def load_and_validate_style_file(path: Path) -> Dict[str, Any]:
-    """
-    Load a JSON/YAML style file and validate it.
+def load_and_validate_style_file(path: Path) -> dict[str, Any]:
+    """Load a JSON/YAML style file and validate it.
 
     Returns the parsed style object if valid, raises jsonschema.ValidationError otherwise.
     """

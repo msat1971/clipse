@@ -1,5 +1,9 @@
-"""
-Public package interface for clipse.
+"""Public package interface for clipse.
+
+Examples:
+    >>> from clipse import __version__, load_config  # doctest: +SKIP
+    >>> isinstance(__version__, str)
+    True
 """
 
 from ._version import __version__

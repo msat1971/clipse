@@ -5,6 +5,14 @@ Provides commands to:
 - explain the resolved config (JSON or text)
 - generate a minimal runnable CLI package scaffold
 - list built-in and discovered styles
+
+Examples:
+    Validate a config file:
+
+    >>> from clipse.cli import cmd_validate  # doctest: +SKIP
+    >>> rc = cmd_validate("./examples/example_config.json")  # doctest: +SKIP
+    >>> rc in (0,)  # doctest: +SKIP
+    True
 """
 
 from __future__ import annotations
@@ -12,9 +20,8 @@ from __future__ import annotations
 import argparse
 import json
 import os
-import sys
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 from .core import load_config
 from .instructions import generate_instructions
@@ -54,11 +61,15 @@ def cmd_validate(config_path: Optional[str]) -> int:
     """Validate the config file against the core schema.
 
     Prints a success message on validation. Returns 0 on success.
+
+    Examples:
+        >>> cmd_validate(None)  # doctest: +SKIP
+        0
     """
     path = _discover_config_path(Path(config_path) if config_path else None)
     cfg = load_config(path)
     validate_core_config(cfg)
-    res = resolve_config(cfg)
+    resolve_config(cfg)
     print(f"OK: {path} validates against core schema")
     return 0
 
@@ -67,6 +78,10 @@ def cmd_explain(config_path: Optional[str], fmt: str) -> int:
     """Resolve and print the effective config.
 
     fmt: "json" or "text". Returns 0 on success.
+
+    Examples:
+        >>> cmd_explain(None, "json")  # doctest: +SKIP
+        0
     """
     path = _discover_config_path(Path(config_path) if config_path else None)
     cfg = load_config(path)
@@ -95,6 +110,10 @@ def cmd_generate(config_path: Optional[str], out_dir: str, style_file: Optional[
     Validates the provided config, creates the output package directory,
     writes `adapter.py`, `app.py`, `__init__.py`, and `py.typed`, and prints
     integration instructions.
+
+    Examples:
+        >>> cmd_generate(None, "./generated_cli", None)  # doctest: +SKIP
+        0
     """
     # Load to ensure config is valid; error early if invalid.
     path = _discover_config_path(Path(config_path) if config_path else None)
@@ -107,7 +126,13 @@ def cmd_generate(config_path: Optional[str], out_dir: str, style_file: Optional[
     # Write a minimal runnable package scaffold
     _write_file(
         out / "__init__.py",
-        '"""Generated CLI package scaffold.\n\nThis package is produced by clipse\'s \'generate\' command.\n"""\n__all__ = []\n',
+        (
+            """Generated CLI package scaffold.
+
+This package is produced by clipse's 'generate' command.
+"""
+            "\n__all__ = []\n"
+        ),
     )
     _write_file(out / "py.typed", "")
     _write_file(
@@ -195,7 +220,13 @@ def cmd_list_styles() -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    """Build and return the top-level argparse parser for clipse."""
+    """Build and return the top-level argparse parser for clipse.
+
+    Examples:
+        >>> p = build_parser()
+        >>> isinstance(p, argparse.ArgumentParser)
+        True
+    """
     p = argparse.ArgumentParser(prog="clipse", description="Clipse generator")
     p.add_argument("--list-styles", action="store_true", dest="list_styles", help="List built-in and discovered styles")
     sub = p.add_subparsers(dest="cmd", required=True)

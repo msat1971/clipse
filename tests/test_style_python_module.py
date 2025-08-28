@@ -1,11 +1,13 @@
 from __future__ import annotations
 
-import textwrap
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
 
 from clipse.style_loader import discover_style_path, load_style
+
+if TYPE_CHECKING:  # pragma: no cover - typing-only import
+    from pathlib import Path
 
 _MINIMAL_STYLE_PY = """\
 STYLE_NAME = "custom-minimal"

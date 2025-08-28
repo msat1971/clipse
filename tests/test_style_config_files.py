@@ -1,9 +1,10 @@
 from __future__ import annotations
 
 import json
-from pathlib import Path
+from typing import TYPE_CHECKING
 
 import pytest
+from jsonschema import ValidationError
 
 from clipse.schema import load_and_validate_style_file
 from clipse.style_loader import discover_style_path, load_style
@@ -25,6 +26,10 @@ options:
   long_prefix: "--"
 positionals: {}
 """
+
+
+if TYPE_CHECKING:  # pragma: no cover - typing-only import
+    from pathlib import Path
 
 
 def test_validate_json_style_ok(tmp_path: Path) -> None:
@@ -66,5 +71,5 @@ def test_style_discovery_precedence_env_over_project(tmp_path: Path, monkeypatch
 def test_style_validation_error(tmp_path: Path) -> None:
     bad = tmp_path / ".clipse_style.json"
     bad.write_text(json.dumps({"name": "oops"}), encoding="utf-8")  # missing required sections
-    with pytest.raises(Exception):
+    with pytest.raises(ValidationError):
         load_and_validate_style_file(bad)

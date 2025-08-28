@@ -5,7 +5,7 @@ lint.select = [
     "C4",  # flake8-comprehensions - https://beta.ruff.rs/docs/rules/#flake8-comprehensions-c4
     "C90", # mccabe - https://beta.ruff.rs/docs/rules/#mccabe-c90
     "COM", # flak8-commas - https://beta.ruff.rs/docs/rules/#flake8-commas-com
-    #"D", # pydocstyle - not enabled temporarily
+    "D",   # pydocstyle - enable docstring checks
     "E",   # pycodestyle error - https://beta.ruff.rs/docs/rules/#error-e
     "ERA", # flake8-eradicate - https://beta.ruff.rs/docs/rules/#eradicate-era
     "FA",  # flake8-future-annotations - https://beta.ruff.rs/docs/rules/#flake8-future-annotations-fa
@@ -41,6 +41,8 @@ lint.ignore = [
     "A005",
     "TC006", # https://docs.astral.sh/ruff/rules/runtime-cast-value/
     "PLC0415", # https://docs.astral.sh/ruff/rules/import-outside-top-level/
+    "UP045",   # Use X | None for type annotations (keep Optional[...] for py39 syntax compatibility)
+    "UP007",   # Use X | Y for type annotations (keep Union[...] for py39 parser compatibility)
 ]
 
 # Exclude files and directories
@@ -82,6 +84,9 @@ max-statements = 70
 [lint.isort]
 split-on-trailing-comma = true
 
+[lint.pydocstyle]
+convention = "google"
+
 [lint.flake8-type-checking]
 runtime-evaluated-base-classes = ["pydantic.BaseModel"]
 
@@ -90,5 +95,5 @@ runtime-evaluated-base-classes = ["pydantic.BaseModel"]
 
 # Maintenance: we're keeping EphemeralMetrics code in case of Hyrum's law so we can quickly revert it
 # "aws_lambda_powertools/metrics/metrics.py" = ["ERA001"]
-"examples/*" = ["FA100", "TCH"]
-"tests/*" = ["FA100"]
+"examples/*" = ["FA100", "TCH", "D"]
+"tests/*" = ["FA100", "D"]
