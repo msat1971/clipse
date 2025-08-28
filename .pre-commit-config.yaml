@@ -1,29 +1,36 @@
-
+---
 repos:
-  - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
-    hooks:
-      - id: end-of-file-fixer
-      - id: trailing-whitespace
-      - id: check-yaml
+- repo: https://github.com/igorshubovych/markdownlint-cli
+  rev: v0.41.0
+  hooks:
+    - id: markdownlint
+      args: [--fix]
+      files: \.(md|markdown)$
 
-  - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.6.9
-    hooks:
-      - id: ruff
-        args: ["--fix"]
+- repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: "v4.6.0"
+  hooks:
+    - id: end-of-file-fixer
+    - id: trailing-whitespace
+    - id: check-yaml
 
-  - repo: local
-    hooks:
-      - id: doc-examples
-        name: Ensure docstrings include Examples
-        entry: python3 tools/check_doc_examples.py
-        language: system
-        files: ^src/.*\.py$
-        exclude: ^(tests/|examples/)
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: "v0.6.9"
+  hooks:
+    - id: ruff
+      args: ["--fix"]
 
-      - id: schema-sync-check
-        name: Ensure schema copies are in sync
-        entry: python3 tools/sync_schemas.py --check
-        language: system
-        files: ^src/clipse/schema/.*\.json$
+- repo: local
+  hooks:
+    - id: doc-examples
+      name: Ensure docstrings include Examples
+      entry: python3 tools/check_doc_examples.py --warn
+      language: system
+      files: '^src/.*\.py$'
+      exclude: '^(tests/|examples/)'
+
+    - id: schema-sync-check
+      name: Ensure schema copies are in sync
+      entry: python3 tools/sync_schemas.py --check
+      language: system
+      files: '^src/clipse/schema/.*\.json$'

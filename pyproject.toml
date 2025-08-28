@@ -91,7 +91,3 @@ dev = [
   "mkdocs-material",
   "coverage[toml]>=7.6,<8",  # ← this is the equivalent of coverage = {extras=["toml"], version="^7.6"}
 ]
-
-
-
-

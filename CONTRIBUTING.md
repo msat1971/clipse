@@ -13,16 +13,19 @@ This policy is enforced via pre-commit (see below) and Ruff pydocstyle.
 ## Development Workflow
 
 1. Create a virtualenv and install dev deps:
+
    ```bash
    pip install -e .[dev]
    ```
 
 2. Install pre-commit hooks (runs on each commit):
+
    ```bash
    pre-commit install
    ```
 
 3. Run formatters, linters, and tests locally:
+
    ```bash
    ruff check .
    mypy src

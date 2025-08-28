@@ -295,4 +295,3 @@ registry:
     kind: enum
     values: []
     description: "Template enum; override 'values' in project config."
-

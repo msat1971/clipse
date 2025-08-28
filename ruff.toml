@@ -39,9 +39,7 @@ lint.ignore = [
     "PLC1901", # Compare-to-empty-string - disabled temporarily
     "PYI024",
     "A005",
-    "TC006", # https://docs.astral.sh/ruff/rules/runtime-cast-value/
     "PLC0415", # https://docs.astral.sh/ruff/rules/import-outside-top-level/
-    "UP045",   # Use X | None for type annotations (keep Optional[...] for py39 syntax compatibility)
     "UP007",   # Use X | Y for type annotations (keep Union[...] for py39 parser compatibility)
 ]
 

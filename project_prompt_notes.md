@@ -28,35 +28,41 @@ persona: senior_python_engineer
 These rules govern **how the assistant generates or updates the repository**.
 
 ### Meta Rules
-- The project already exists → some code is new, some will be refactored.  
-- All tests must pass with `pytest`.  
-- Coverage ≥ 90% enforced with `--cov-fail-under=90`.  
-- Internal consistency: modules, imports, tests, and docs align exactly.  
-- Runnable code only — no placeholders.  
-- Reuse repo tooling (`ruff`, `mypy`, `pytest`, `hatch`, `pre-commit`).  
-- Package schemas inside the wheel (`clipse.schema.1.0.0.json`, `clipse_style.schema.1.0.0.json`).  
+
+- The project already exists → some code is new, some will be refactored.
+- All tests must pass with `pytest`.
+- Coverage ≥ 90% enforced with `--cov-fail-under=90`.
+- Internal consistency: modules, imports, tests, and docs align exactly.
+- Runnable code only — no placeholders.
+- Reuse repo tooling (`ruff`, `mypy`, `pytest`, `hatch`, `pre-commit`).
+- Package schemas inside the wheel (`clipse.schema.1.0.0.json`, `clipse_style.schema.1.0.0.json`).
 
 ### Output Contract
-Always output results in this order:  
-1. Concise repo tree of new/changed files.  
-2. Full per-file content in fenced code blocks (no placeholders).  
-3. Unified diff for changed files.  
-4. Commands to run locally (`pip install -e .[dev]`, `pytest`, etc.).  
+
+Always output results in this order:
+
+1. Concise repo tree of new/changed files.
+2. Full per-file content in fenced code blocks (no placeholders).
+3. Unified diff for changed files.
+4. Commands to run locally (`pip install -e .[dev]`, `pytest`, etc.).
 
 ### Quality Gates
-- No failing tests.  
-- Coverage ≥ 90%.  
-- Linting clean with Ruff.  
-- Type-check clean with Mypy.  
-- Wheel builds with Hatchling + passes `twine check`.  
+
+- No failing tests.
+- Coverage ≥ 90%.
+- Linting clean with Ruff.
+- Type-check clean with Mypy.
+- Wheel builds with Hatchling + passes `twine check`.
 
 ### Self-Check Before Returning
-- Confirm imports resolve.  
-- Confirm CLI help runs.  
-- Confirm pre-commit hooks succeed on clean repo.  
-- Confirm schemas included in wheel (via `importlib.resources`).  
+
+- Confirm imports resolve.
+- Confirm CLI help runs.
+- Confirm pre-commit hooks succeed on clean repo.
+- Confirm schemas included in wheel (via `importlib.resources`).
 
 ### Assumptions Log
+
 If forced to decide (e.g. ambiguous env precedence), log the assumption + rationale at the end of output.
 
 ### Repository Layout (with comments for generation)
@@ -123,83 +129,98 @@ If forced to decide (e.g. ambiguous env precedence), log the assumption + ration
 This section defines what the `clipse` CLI must do and how it must behave.
 
 ### Mission
-Implement the **clipse** generator CLI — a developer-facing tool that:  
-- Reads a `.clipse` config file (JSON/YAML).  
-- Validates + resolves refs, vars, env, constraints.  
-- Generates a runnable CLI package (`generated_cli/`).  
-- Supports multiple command styles (noun–verb, verb–noun, unix, shell, custom).  
-- Emits integration instructions (deps, entrypoints, CI snippets).  
+
+Implement the **clipse** generator CLI — a developer-facing tool that:
+
+- Reads a `.clipse` config file (JSON/YAML).
+- Validates + resolves refs, vars, env, constraints.
+- Generates a runnable CLI package (`generated_cli/`).
+- Supports multiple command styles (noun–verb, verb–noun, unix, shell, custom).
+- Emits integration instructions (deps, entrypoints, CI snippets).
 - Ships with ≥90% tested coverage and schemas packaged.
 
 ### Coding Principles
-- **Clarity & Reuse** → composable modules.  
-- **Consistency** → unified style for logging, errors, typing.  
-- **Simplicity** → straightforward logic, avoid clever hacks.  
-- **Demo-Oriented** → examples and demo action runnable.  
+
+- **Clarity & Reuse** → composable modules.
+- **Consistency** → unified style for logging, errors, typing.
+- **Simplicity** → straightforward logic, avoid clever hacks.
+- **Demo-Oriented** → examples and demo action runnable.
 - **Visual Quality** → clean docs + CLI help.
 
 ### Config Discovery
-1. `CLIPSE_APP_CONFIG` (env var)  
-2. `--config` CLI flag  
-3. `./.clipse` at repo root  
-4. `./clipse` in cwd  
+
+1. `CLIPSE_APP_CONFIG` (env var)
+2. `--config` CLI flag
+3. `./.clipse` at repo root
+4. `./clipse` in cwd
 
 ### Styles
-- Built-in: noun-verb, verb-noun, unix, shell.  
-- Custom style discovery:  
-  1. `--style-file PATH`  
-  2. `CLIPSE_STYLE_FILE` env var  
-  3. `./.clipse_style.{py,json,yaml,yml}`  
+
+- Built-in: noun-verb, verb-noun, unix, shell.
+- Custom style discovery:
+  1. `--style-file PATH`
+  2. `CLIPSE_STYLE_FILE` env var
+  3. `./.clipse_style.{py,json,yaml,yml}`
 
 ### CLI Commands
-- `clipse validate --config <path>`  
-- `clipse explain --config <path> [--format json|text]`  
-- `clipse generate --config <path> --out ./generated_cli --style ...`  
-- `clipse --list-styles`  
+
+- `clipse validate --config <path>`
+- `clipse explain --config <path> [--format json|text]`
+- `clipse generate --config <path> --out ./generated_cli --style ...`
+- `clipse --list-styles`
 
 ### Semantic Rules
-- Configs are **maps keyed by id**.  
-- `$ref` allowed from `shared_defs`.  
-- Vars resolve: local → shared. Cycles reported with chain.  
-- Env precedence: CLI > env > default (unless overridden).  
-- Constraints: requires, conflicts, exactly_one_of, at_least_one_of.  
+
+- Configs are **maps keyed by id**.
+- `$ref` allowed from `shared_defs`.
+- Vars resolve: local → shared. Cycles reported with chain.
+- Env precedence: CLI > env > default (unless overridden).
+- Constraints: requires, conflicts, exactly_one_of, at_least_one_of.
 - JSON Schema is authoritative.
 
 ### Generated Package Layout
-- `generated_cli/` must include `__init__.py`, `py.typed`, `app.py`, `adapter.py`, `commands/*.py` (if style requires).  
+
+- `generated_cli/` must include `__init__.py`, `py.typed`, `app.py`, `adapter.py`, `commands/*.py` (if style requires).
 
 Adapter API:
+
 ```python
 def register(handler: Callable[[str, str, dict], Any]) -> None: ...
 def invoke(object_id: str, action_id: str, **kwargs) -> Any: ...
 ```
 
 ### Integration Instructions
-- Auto-detect project style (pip/Poetry/uv/Hatch/PDM).  
-- Emit copy/paste snippets for deps, entrypoints, CI glue.  
+
+- Auto-detect project style (pip/Poetry/uv/Hatch/PDM).
+- Emit copy/paste snippets for deps, entrypoints, CI glue.
 - Output to stdout, `README.md` anchor, or `docs/INTEGRATION.md`.
 
 ### Error Handling
-- Categories: Load, Schema, Merge, Vars, Env, Constraint, Style, Backend, Instructions.  
-- Errors print breadcrumb paths.  
+
+- Categories: Load, Schema, Merge, Vars, Env, Constraint, Style, Backend, Instructions.
+- Errors print breadcrumb paths.
 - Cycles show full chain.
 
 ### Tests
-- Loader, schema, style, instructions, integration.  
-- Coverage ≥ 90%.  
+
+- Loader, schema, style, instructions, integration.
+- Coverage ≥ 90%.
+
 ```bash
 pytest -q --cov=src/clipse --cov-report=term-missing --cov-fail-under=90
 ```
 
 ### CI/CD
+
 - Pipeline: Ruff → Mypy → Pytest → Hatch build + `twine check` → Codecov.
 
 ### Acceptance Criteria
-1. `clipse validate` works on `examples/example_config.json`.  
-2. `clipse explain` shows resolved defaults/unions.  
-3. `clipse generate` produces runnable package for all built-in styles.  
-4. Custom style works.  
-5. `--list-styles` shows built-ins + discovered.  
-6. Integration instructions emitted correctly.  
-7. CI enforces ≥90% coverage.  
-8. Wheel includes schemas.  
+
+1. `clipse validate` works on `examples/example_config.json`.
+2. `clipse explain` shows resolved defaults/unions.
+3. `clipse generate` produces runnable package for all built-in styles.
+4. Custom style works.
+5. `--list-styles` shows built-ins + discovered.
+6. Integration instructions emitted correctly.
+7. CI enforces ≥90% coverage.
+8. Wheel includes schemas.

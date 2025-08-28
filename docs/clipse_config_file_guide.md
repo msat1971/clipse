@@ -3,7 +3,7 @@
 
 # Clipse Config: Objects & Actions – Authoring Guide
 
-Author CLI specs that are **style‑agnostic** and map cleanly to noun–verb, verb–noun, unix, or shell renderings.  
+Author CLI specs that are **style‑agnostic** and map cleanly to noun–verb, verb–noun, unix, or shell renderings.
 **Schema target:** `https://github.com/msat1971/clipse/blob/develop/schema/clipse.schema.1.0.0.json`
 
 ---
@@ -27,6 +27,7 @@ Author CLI specs that are **style‑agnostic** and map cleanly to noun–verb, v
 ```
 
 ### Objects (YAML)
+
 ```yaml
 objects:
   foo:
@@ -54,6 +55,7 @@ objects:
 ```
 
 ### Actions (JSON)
+
 ```json
 {
   "actions": {
@@ -106,6 +108,7 @@ objects:
 ## 4) Types & Environment Variables
 
 **Types**
+
 ```jsonc
 { "type": "string" }
 { "type": { "kind": "enum", "values": ["basic","web","api"] } }
@@ -113,15 +116,19 @@ objects:
 ```
 
 **Environment binding**
+
 ```jsonc
 "env": "YOURCLI_DIR"
 ```
+
 equals
+
 ```jsonc
 "env": { "var": "YOURCLI_DIR", "override_cli": false, "update": false }
 ```
 
 **Precedence**
+
 1) env (if `override_cli=true` and set) → 2) CLI value → 3) env (if set) → 4) `default` → 5) missing.
 
 If `env.update=true`, set the environment variable to the final value.
@@ -131,6 +138,7 @@ If `env.update=true`, set the environment variable to the final value.
 ## 5) Constraints (ID‑based)
 
 Reference only **map keys** in the same scope:
+
 ```json
 {
   "requires": ["name"],
@@ -145,6 +153,7 @@ Reference only **map keys** in the same scope:
 ## 6) Loader: Order & Checks
 
 **Order**
+
 1. Resolve `$ref`; shallow merge; maps by key (use‑site wins).
 2. Resolve `{{...}}` variables with scope → `shared_defs.vars` (recurse until stable).
 3. Build unions:
@@ -157,6 +166,7 @@ Reference only **map keys** in the same scope:
 8. Schema validation against **clipse.schema.1.0.0.json**.
 
 **Integrity checks**
+
 - Unknown `$ref`, duplicate keys after merge.
 - Circular variables.
 - Missing defaults.

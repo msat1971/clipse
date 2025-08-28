@@ -6,6 +6,7 @@ Authoritative schemas are maintained under `src/clipse/schema/` and mirrored her
 - Style schema: [`clipse_style.schema.1.0.0.json`](./clipse_style.schema.1.0.0.json)
 
 Usage examples and references:
+
 - Programmatic validation uses the packaged schemas via `importlib.resources` in `src/clipse/schema.py`.
 - Repo-level copies are also in `/schema/` for easy linking from the README and Wiki.
 

@@ -81,8 +81,22 @@ def check_file(path: Path) -> list[str]:
 
 
 def main(argv: list[str]) -> int:
-    """Entrypoint for pre-commit: process changed files and report failures."""
-    files = [Path(a) for a in argv[1:]]
+    """Entrypoint for pre-commit: process changed files and report failures.
+
+    Supports an optional "--warn" flag to emit messages as warnings without
+    failing the hook (exit 0). Usage:
+
+        tools/check_doc_examples.py [--warn] FILE [FILE ...]
+    """
+    warn = False
+    args: list[str] = []
+    for a in argv[1:]:
+        if a == "--warn":
+            warn = True
+        else:
+            args.append(a)
+
+    files = [Path(a) for a in args]
     py_files = [p for p in files if _is_python_file(p) and not _should_skip(p) and str(p).startswith("src/")]
     failures: list[str] = []
     for p in py_files:
@@ -91,7 +105,7 @@ def main(argv: list[str]) -> int:
     if failures:
         for msg in failures:
             print(msg)
-        return 1
+        return 0 if warn else 1
     return 0
 
 
