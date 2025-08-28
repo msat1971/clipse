@@ -1,6 +1,6 @@
 # Contributing
 
-Thank you for contributing to clipse!
+Thank you for contributing to Dclipse!
 
 ## Docstrings & Examples (Policy)
 

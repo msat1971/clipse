@@ -1,4 +1,4 @@
-# clipse Documentation
+# Dclipse Documentation
 
 Spec-first CLI engine to design, validate, and generate CLIs from a single configuration file.
 

@@ -1,0 +1,43 @@
+/* Brand theming overrides */
+:root {
+  /* Primary and accent colors */
+  --md-primary-fg-color: #9ea1a1;
+  --md-accent-fg-color:  #ba0c2f;
+}
+
+/* Swap logo for dark scheme */
+:root[data-md-color-scheme="slate"] .md-header__button.md-logo img {
+  content: url("../images/Logo_Brand_Dawg_Dark.svg");
+}
+
+/* Enlarge logo size (responsive) */
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  height: 40px; /* baseline on small screens */
+}
+
+@media screen and (min-width: 60em) { /* ~960px */
+  .md-header__button.md-logo img,
+  .md-header__button.md-logo svg {
+    height: 52px; /* larger on desktop */
+  }
+}
+
+/* Reduce margins/padding around the logo */
+.md-header__button.md-logo {
+  margin: 0;
+  padding: 0;
+}
+
+/* Slightly increase header height to accommodate larger logo */
+.md-header,
+.md-header__inner {
+  height: 72px;
+}
+
+/* Keep header contents vertically centered */
+.md-header__inner {
+  align-items: center;
+  padding-left: 0.5rem;
+  padding-right: 0.75rem;
+}

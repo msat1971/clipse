@@ -4,11 +4,30 @@ repo_url: https://github.com/msat1971/dclipse
 repo_name: msat1971/dclipse
 theme:
   name: material
+  logo: assets/images/Logo_Brand_Dawg_Light.svg
+  favicon: assets/images/favicon.png
   features:
     - navigation.sections
-    - content.code.copy
-    - toc.follow
     - navigation.top
+    - toc.follow
+    - content.code.copy
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+    - content.code.annotate
+  palette:
+    - scheme: default
+      primary: "#9ea1a1"
+      accent: "#ba0c2f"
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - scheme: slate
+      primary: "#9ea1a1"
+      accent: "#ba0c2f"
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
 nav:
   - Home: index.md
   - Getting started:
@@ -28,9 +47,15 @@ markdown_extensions:
   - codehilite
   - toc:
       permalink: true
+  - attr_list
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight
 extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/msat1971/dclipse
 plugins:
   - search
+extra_css:
+  - assets/styles/extra.css
