@@ -45,4 +45,4 @@ docs-build:
 docs-serve:
 	.venv/bin/python -m pip install -U pip >/dev/null 2>&1 || true
 	.venv/bin/pip install -q mkdocs-material || pip install -q mkdocs-material
-	mkdocs serve -a 127.0.0.1:8000
+	mkdocs serve -a 127.0.0.1:8001
