@@ -23,27 +23,34 @@ classifiers = [
   "Programming Language :: Python :: 3.13",
   "Typing :: Typed"
 ]
-keywords = [
-  "clipse",
-  "cli",
-  "builder"
+
+
+dependencies = [
+  "jsonschema>=4.18",
+  "PyYAML>=6.0",
 ]
-license = "MIT"
+
+[project.scripts]
+clipse = "clipse.cli:main"
 
 [project.urls]
 Homepage = "https://github.com/msat1971/clipse"
-Documentation = "https://github.com/msat1971/clipse/docs"
+Documentation = "https://msat1971.github.io/clipse/"
 Changelog = "https://github.com/msat1971/clipse/releases"
 
 
 [tool.pytest.ini_options]
-addopts = "-q"
+addopts = "-q --strict-markers --disable-warnings --maxfail=1 --cov=src/clipse --cov-branch --cov-report=term-missing"
 testpaths = ["tests"]
 pythonpath = ["src"]
 
 [tool.coverage.run]
 branch = true
 source = ["src/clipse"]
+
+[tool.coverage.report]
+fail_under = 90
+show_missing = true
 
 [tool.ruff]
 line-length = 100
@@ -57,14 +64,21 @@ disallow_incomplete_defs = true
 warn_unused_ignores = true
 strict_optional = true
 no_implicit_optional = true
-
-[tool.pytest.ini_options]
-addopts = "-q --strict-markers --disable-warnings --maxfail=1"
+disallow_untyped_defs = true
+warn_return_any = true
+no_implicit_reexport = true
+warn_unused_configs = true
+show_error_codes = true
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/clipse"]
 
-dependencies = []
+[tool.hatch.build]
+include = [
+  "src/clipse/schema/clipse.schema.1.0.0.json",
+  "src/clipse/schema/clipse_style.schema.1.0.0.json",
+  "src/clipse/py.typed",
+]
 [project.optional-dependencies]
 dev = [
   "pytest",
@@ -77,7 +91,3 @@ dev = [
   "mkdocs-material",
   "coverage[toml]>=7.6,<8",  # ← this is the equivalent of coverage = {extras=["toml"], version="^7.6"}
 ]
-
-
-
-

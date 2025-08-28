@@ -1,0 +1,36 @@
+site_name: Clipse Documentation
+site_url: https://msat1971.github.io/clipse/
+repo_url: https://github.com/msat1971/clipse
+repo_name: msat1971/clipse
+theme:
+  name: material
+  features:
+    - navigation.sections
+    - content.code.copy
+    - toc.follow
+    - navigation.top
+nav:
+  - Home: index.md
+  - Getting started:
+      - Overview: getting-started/index.md
+      - Installing: getting-started/installing.md
+      - Configuring: getting-started/configuring.md
+      - Troubleshooting: getting-started/troubleshooting.md
+  - User Guide:
+      - Overview: index.md
+      - Schemas: schema/index.md
+  - Integration:
+      - Getting Started: integration/index.md
+  - Project:
+      - Codebase: project/index.md
+markdown_extensions:
+  - admonition
+  - codehilite
+  - toc:
+      permalink: true
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/msat1971/clipse
+plugins:
+  - search

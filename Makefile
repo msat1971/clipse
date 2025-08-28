@@ -1,33 +1,48 @@
 
-.PHONY: help install-dev lint type test format build clean
+.PHONY: help install-dev lint type test format format-check build clean schema-sync schema-check docs-build docs-serve
 
 help:
-	@echo "Targets: install-dev lint type test format build clean"
+	@echo "Targets: install-dev lint type test format build clean schema-sync schema-check docs-build docs-serve"
 
 install-dev:
-	python -m pip install -U pip
-	pip install -e .[dev]
+	.venv/bin/python -m pip install -U pip
+	.venv/bin/pip install -e '.[dev]'
 
 format-check:
-	poetry run ruff format aws_lambda_powertools tests examples --check
+	.venv/bin/python -m ruff format src tests examples --check
 
 format:
-	poetry run ruff format aws_lambda_powertools tests examples
+	.venv/bin/python -m ruff format src tests examples
 
 lint: format
-	poetry run ruff check aws_lambda_powertools tests examples
+	.venv/bin/python -m ruff check src tests examples
 
 type:
-	mypy src/clipse
+	.venv/bin/python -m mypy src/clipse
 
 test:
-	pytest
-
-format:
-	ruff check --fix .
+	.venv/bin/python -m pytest -q
 
 build:
-	python -m build
+	.venv/bin/python -m build
 
 clean:
 	rm -rf dist build .pytest_cache .mypy_cache
+
+# --- Schema sync ---
+schema-sync:
+	python3 tools/sync_schemas.py
+
+schema-check:
+	python3 tools/sync_schemas.py --check
+
+# --- Documentation (MkDocs) ---
+docs-build:
+	.venv/bin/python -m pip install -U pip >/dev/null 2>&1 || true
+	.venv/bin/pip install -q mkdocs-material || pip install -q mkdocs-material
+	mkdocs build --strict --clean
+
+docs-serve:
+	.venv/bin/python -m pip install -U pip >/dev/null 2>&1 || true
+	.venv/bin/pip install -q mkdocs-material || pip install -q mkdocs-material
+	mkdocs serve -a 127.0.0.1:8000
