@@ -18,7 +18,7 @@ lint: format
 	.venv/bin/python -m ruff check src tests examples
 
 type:
-	.venv/bin/python -m mypy src/clipse
+	.venv/bin/python -m mypy src/dclipse
 
 test:
 	.venv/bin/python -m pytest -q
