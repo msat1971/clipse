@@ -19,8 +19,8 @@ except Exception:  # pragma: no cover - optional
 from jsonschema import Draft202012Validator, ValidationError  # type: ignore
 
 _SCHEMA_DIR = "schema"
-_CORE_SCHEMA_NAME = "clipse.schema.1.0.0.json"
-_STYLE_SCHEMA_NAME = "clipse_style.schema.1.0.0.json"
+_CORE_SCHEMA_NAME = "dclipse.schema.1.0.0.json"
+_STYLE_SCHEMA_NAME = "dclipse_style.schema.1.0.0.json"
 
 
 @dataclass(frozen=True)
@@ -43,7 +43,7 @@ def _resource_path(package: str, rel: str) -> Traversable:
 
 def get_schema_paths() -> SchemaPaths:
     """Locate packaged schema files."""
-    pkg = __package__.split(".")[0]  # "clipse"
+    pkg = __package__.split(".")[0]  # "dclipse"
     core = _resource_path(pkg, f"{_SCHEMA_DIR}/{_CORE_SCHEMA_NAME}")
     style = _resource_path(pkg, f"{_SCHEMA_DIR}/{_STYLE_SCHEMA_NAME}")
     return SchemaPaths(core=core, style=style)
@@ -83,7 +83,7 @@ def _validator(schema_path: Traversable) -> Draft202012Validator:
 
 
 def validate_core_config(config: dict[str, Any]) -> None:
-    """Validate a resolved clipse config against the authoritative core schema."""
+    """Validate a resolved dclipse config against the authoritative core schema."""
     v = _validator(get_schema_paths().core)
     v.validate(config)
 

@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from clipse.style_loader import discover_style_path, load_style
+from dclipse.style_loader import discover_style_path, load_style
 
 if TYPE_CHECKING:  # pragma: no cover - typing-only import
     from pathlib import Path
@@ -34,7 +34,7 @@ if __name__ == '__main__':
 
 
 def test_python_style_module_ok(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    mod = tmp_path / ".clipse_style.py"
+    mod = tmp_path / ".dclipse_style.py"
     mod.write_text(_MINIMAL_STYLE_PY, encoding="utf-8")
 
     monkeypatch.chdir(tmp_path)
@@ -50,7 +50,7 @@ def test_python_style_module_ok(tmp_path: Path, monkeypatch: pytest.MonkeyPatch)
 
 
 def test_python_style_missing_render(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
-    bad = tmp_path / ".clipse_style.py"
+    bad = tmp_path / ".dclipse_style.py"
     bad.write_text("STYLE_NAME='bad'\n", encoding="utf-8")
 
     monkeypatch.chdir(tmp_path)

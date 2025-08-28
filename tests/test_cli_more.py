@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 
 import pytest
 
-from clipse import cli
+from dclipse import cli
 
 if TYPE_CHECKING:  # pragma: no cover
     from pathlib import Path
@@ -14,23 +14,23 @@ if TYPE_CHECKING:  # pragma: no cover
 def test_discover_config_path_env_var(monkeypatch, tmp_path: Path) -> None:
     cfg = tmp_path / "cfg.json"
     cfg.write_text("{}", encoding="utf-8")
-    monkeypatch.setenv("CLIPSE_APP_CONFIG", str(cfg))
+    monkeypatch.setenv("DCLIPSE_APP_CONFIG", str(cfg))
     p = cli._discover_config_path(None)
     assert p == cfg
 
 
 def test_discover_config_path_explicit(tmp_path: Path) -> None:
-    cfg = tmp_path / "clipse"
+    cfg = tmp_path / "dclipse"
     cfg.write_text("{}", encoding="utf-8")
     p = cli._discover_config_path(cfg)
     assert p == cfg
 
 
 def test_discover_config_path_missing(monkeypatch, tmp_path: Path) -> None:
-    monkeypatch.delenv("CLIPSE_APP_CONFIG", raising=False)
+    monkeypatch.delenv("DCLIPSE_APP_CONFIG", raising=False)
     cwd = tmp_path / "work"
     cwd.mkdir()
-    # ensure no .clipse/clipse exist
+    # ensure no .dclipse/dclipse exist
     with pytest.raises(FileNotFoundError):
         # change cwd via monkeypatch.chdir
         monkeypatch.chdir(cwd)
@@ -77,7 +77,7 @@ def test_cmd_generate_writes_files_and_uses_style_discovery(tmp_path: Path, monk
     config_path.write_text(json.dumps(cfg), encoding="utf-8")
 
     # Create a declarative style file in project root for discovery
-    style = tmp_path / ".clipse_style.json"
+    style = tmp_path / ".dclipse_style.json"
     style_obj = {
         "name": "custom-minimal",
         "version": "1.0.0",

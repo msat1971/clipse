@@ -2,8 +2,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from clipse.core import load_config
-from clipse.resolver import resolve_config
+from dclipse.core import load_config
+from dclipse.resolver import resolve_config
 
 
 def test_resolve_example_config() -> None:

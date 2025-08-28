@@ -1,4 +1,4 @@
-"""Style discovery and loading for clipse.
+"""Style discovery and loading for dclipse.
 
 Supports Python style modules that implement a ``render`` function and
 declarative JSON/YAML style files validated against the style schema.
@@ -86,15 +86,15 @@ def _discover_project_root(start: Path) -> Path:
 def discover_style_path(
     *,
     explicit_path: Path | None,
-    env_var: str = "CLIPSE_STYLE_FILE",
+    env_var: str = "DCLIPSE_STYLE_FILE",
     cwd: Path | None = None,
 ) -> Path | None:
     """Discover the style file path to use.
 
     Discovery order:
       1) --style-file (explicit_path)
-      2) $CLIPSE_STYLE_FILE
-      3) ./.clipse_style{.py,.json,.yaml,.yml} in project root.
+      2) $DCLIPSE_STYLE_FILE
+      3) ./.dclipse_style{.py,.json,.yaml,.yml} in project root.
     """
     if explicit_path:
         return explicit_path.resolve()
@@ -107,10 +107,10 @@ def discover_style_path(
 
     root = _discover_project_root(cwd or Path.cwd())
     for cand in (
-        root / ".clipse_style.py",
-        root / ".clipse_style.json",
-        root / ".clipse_style.yaml",
-        root / ".clipse_style.yml",
+        root / ".dclipse_style.py",
+        root / ".dclipse_style.json",
+        root / ".dclipse_style.yaml",
+        root / ".dclipse_style.yml",
     ):
         if cand.exists():
             return cand.resolve()
@@ -126,7 +126,7 @@ def load_style(explicit_path: Path | None = None) -> LoadedStyle:
       - JSON/YAML file validated against the style schema.
 
     Examples:
-        >>> from clipse.style_loader import load_style  # doctest: +SKIP
+        >>> from dclipse.style_loader import load_style  # doctest: +SKIP
         >>> style = load_style()  # doctest: +SKIP
         >>> style.name  # doctest: +SKIP
         'custom-minimal'
@@ -134,8 +134,8 @@ def load_style(explicit_path: Path | None = None) -> LoadedStyle:
     path = discover_style_path(explicit_path=explicit_path)
     if path is None:
         raise FileNotFoundError(
-            "StyleNotFound: no style file found. Provide --style-file, set CLIPSE_STYLE_FILE, "
-            "or create ./.clipse_style.(py|json|yaml|yml) in the project root.",
+            "StyleNotFound: no style file found. Provide --style-file, set DCLIPSE_STYLE_FILE, "
+            "or create ./.dclipse_style.(py|json|yaml|yml) in the project root.",
         )
 
     if path.suffix.lower() == ".py":

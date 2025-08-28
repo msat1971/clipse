@@ -6,8 +6,8 @@ from typing import TYPE_CHECKING
 import pytest
 from jsonschema import ValidationError
 
-from clipse.schema import load_and_validate_style_file
-from clipse.style_loader import discover_style_path, load_style
+from dclipse.schema import load_and_validate_style_file
+from dclipse.style_loader import discover_style_path, load_style
 
 _MINIMAL_JSON = {
     "name": "posix-unix",
@@ -33,7 +33,7 @@ if TYPE_CHECKING:  # pragma: no cover - typing-only import
 
 
 def test_validate_json_style_ok(tmp_path: Path) -> None:
-    p = tmp_path / ".clipse_style.json"
+    p = tmp_path / ".dclipse_style.json"
     p.write_text(json.dumps(_MINIMAL_JSON), encoding="utf-8")
     obj = load_and_validate_style_file(p)
     assert obj["name"] == "posix-unix"
@@ -41,7 +41,7 @@ def test_validate_json_style_ok(tmp_path: Path) -> None:
 
 
 def test_validate_yaml_style_ok(tmp_path: Path) -> None:
-    p = tmp_path / ".clipse_style.yaml"
+    p = tmp_path / ".dclipse_style.yaml"
     p.write_text(_MINIMAL_YAML, encoding="utf-8")
     obj = load_and_validate_style_file(p)
     assert obj["name"] == "aws-cli-like"
@@ -52,11 +52,11 @@ def test_style_discovery_precedence_env_over_project(tmp_path: Path, monkeypatch
     project = tmp_path / "repo"
     project.mkdir()
     # project-level style
-    (project / ".clipse_style.json").write_text(json.dumps(_MINIMAL_JSON), encoding="utf-8")
+    (project / ".dclipse_style.json").write_text(json.dumps(_MINIMAL_JSON), encoding="utf-8")
     # env points elsewhere
     elsewhere = tmp_path / "custom.yaml"
     elsewhere.write_text(_MINIMAL_YAML, encoding="utf-8")
-    monkeypatch.setenv("CLIPSE_STYLE_FILE", str(elsewhere))
+    monkeypatch.setenv("DCLIPSE_STYLE_FILE", str(elsewhere))
 
     # ensure discovery returns env path
     found = discover_style_path(explicit_path=None, cwd=project)
@@ -69,7 +69,7 @@ def test_style_discovery_precedence_env_over_project(tmp_path: Path, monkeypatch
 
 
 def test_style_validation_error(tmp_path: Path) -> None:
-    bad = tmp_path / ".clipse_style.json"
+    bad = tmp_path / ".dclipse_style.json"
     bad.write_text(json.dumps({"name": "oops"}), encoding="utf-8")  # missing required sections
     with pytest.raises(ValidationError):
         load_and_validate_style_file(bad)

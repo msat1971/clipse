@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from clipse.cli import main
+from dclipse.cli import main
 
 
 def test_cli_validate_and_explain(monkeypatch) -> None:

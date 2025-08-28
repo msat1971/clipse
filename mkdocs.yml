@@ -1,7 +1,7 @@
-site_name: Clipse Documentation
-site_url: https://msat1971.github.io/clipse/
-repo_url: https://github.com/msat1971/clipse
-repo_name: msat1971/clipse
+site_name: Dclipse Documentation
+site_url: https://msat1971.github.io/dclipse/
+repo_url: https://github.com/msat1971/dclipse
+repo_name: msat1971/dclipse
 theme:
   name: material
   features:
@@ -31,6 +31,6 @@ markdown_extensions:
 extra:
   social:
     - icon: fontawesome/brands/github
-      link: https://github.com/msat1971/clipse
+      link: https://github.com/msat1971/dclipse
 plugins:
   - search

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from typing import TYPE_CHECKING
 
-from clipse.instructions import detect_project_style
+from dclipse.instructions import detect_project_style
 
 if TYPE_CHECKING:  # pragma: no cover
     from pathlib import Path

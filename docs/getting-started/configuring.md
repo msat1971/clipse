@@ -1,6 +1,6 @@
 # Configuring
 
-Configure clipse with two inputs:
+Configure Dclipse with two inputs:
 
 - Core configuration (JSON or YAML) that describes objects, actions, parameters, and constraints.
 - Optional style file (Python or declarative JSON/YAML) to shape CLI UX conventions.
@@ -26,41 +26,41 @@ Minimal JSON example (excerpt):
 Programmatic load:
 
 ```python
-from clipse import load_config
+from dclipse import load_config
 cfg = load_config("./examples/example_config.json")
 ```
 
 Validate and explain:
 
 ```bash
-clipse validate --config ./examples/example_config.json
-clipse explain --config ./examples/example_config.json --format json
+dclipse validate --config ./examples/example_config.json
+dclipse explain --config ./examples/example_config.json --format json
 ```
 
 ## Style file (optional)
 
 You can control naming, option prefixes, help layout, etc., via a style.
 
-- Option A: Python style module `.clipse_style.py` exporting `render(...)`
-- Option B: Declarative `.clipse_style.json|.yaml|.yml` validated against the style schema
+- Option A: Python style module `.dclipse_style.py` exporting `render(...)`
+- Option B: Declarative `.dclipse_style.json|.yaml|.yml` validated against the style schema
 
-Discovery order (see `src/clipse/style_loader.py`):
+Discovery order (see `src/dclipse/style_loader.py`):
 
-1. `--style-file` flag to `clipse generate`
-2. `CLIPSE_STYLE_FILE` environment variable
-3. `.clipse_style.py` or `.clipse_style.(json|yaml|yml)` at repo root (git root preferred)
+1. `--style-file` flag to `dclipse generate`
+2. `DCLIPSE_STYLE_FILE` environment variable
+3. `.dclipse_style.py` or `.dclipse_style.(json|yaml|yml)` at repo root (git root preferred)
 
 List available styles:
 
 ```bash
-clipse list-styles
+dclipse list-styles
 ```
 
 Use a style during generation:
 
 ```bash
-clipse generate --config ./examples/example_config.json \
-  --out ./generated_cli --style-file ./.clipse_style.py
+dclipse generate --config ./examples/example_config.json \
+  --out ./generated_cli --style-file ./.dclipse_style.py
 ```
 
 See schema details at [Schemas](../schema/index.md).

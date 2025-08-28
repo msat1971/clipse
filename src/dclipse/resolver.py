@@ -1,6 +1,6 @@
 """Config resolution: expand refs, render variables, and validate constraints.
 
-This module turns a raw clipse configuration into a resolved representation and
+This module turns a raw dclipse configuration into a resolved representation and
 collects any constraint issues for reporting in CLI commands.
 """
 
@@ -169,7 +169,7 @@ def resolve_config(raw: dict[str, Any], *, env: Mapping[str, str] | None = None)
         A ``ResolutionResult`` containing the resolved document and issues.
 
     Examples:
-        >>> from clipse.resolver import resolve_config
+        >>> from dclipse.resolver import resolve_config
         >>> res = resolve_config({"objects": {}})
         >>> isinstance(res.resolved, dict) and isinstance(res.issues, list)
         True

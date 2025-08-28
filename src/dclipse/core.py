@@ -1,10 +1,10 @@
-"""Core utilities for loading Clipse configuration files (JSON/YAML).
+"""Core utilities for loading Dclipse configuration files (JSON/YAML).
 
 Examples:
     Load from a file path:
 
-    >>> from clipse.core import load_config
-    >>> cfg = load_config("./clipse")
+    >>> from dclipse.core import load_config
+    >>> cfg = load_config("./dclipse")
     >>> isinstance(cfg, dict)
     True
 """
@@ -22,14 +22,14 @@ except Exception:  # pragma: no cover
 
 
 def load_config(source: Union[str, Path, IO[str]]) -> dict[str, Any]:
-    """Load a Clipse config from a file path or file-like handle.
+    """Load a Dclipse config from a file path or file-like handle.
 
     Supports JSON; YAML if PyYAML is installed.
 
     Examples:
         From a file path:
 
-        >>> from clipse.core import load_config
+        >>> from dclipse.core import load_config
         >>> cfg = load_config("./examples/example_config.json")  # doctest: +SKIP
         >>> isinstance(cfg, dict)
         True

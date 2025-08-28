@@ -1,10 +1,10 @@
 # Getting started
 
-New to clipse? Start here.
+New to Dclipse? Start here.
 
-- What clipse is and why it’s useful: see the project README.
+- What Dclipse is and why it’s useful: see the project README.
 - Install: pick PyPI (when available) or install from source.
-- Configure: author a core configuration JSON/YAML and optional `.clipse` style file.
+- Configure: author a core configuration JSON/YAML and optional `.dclipse` style file.
 - Troubleshoot: common pitfalls and fixes.
 
 Next:

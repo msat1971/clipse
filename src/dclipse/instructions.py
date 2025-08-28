@@ -52,7 +52,7 @@ def generate_instructions(
         An `IntegrationInstructions` instance with the appropriate snippets.
 
     Examples:
-        >>> from clipse.instructions import generate_instructions
+        >>> from dclipse.instructions import generate_instructions
         >>> instr = generate_instructions(project_style="hatch", package="my_cli")
         >>> "[project.scripts]" in instr.entrypoint_snippet
         True
