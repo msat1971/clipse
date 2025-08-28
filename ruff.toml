@@ -49,6 +49,7 @@ exclude = [
     ".eggs",
     "setup.py",
     "example",
+    "examples",
     ".aws-sam",
     ".git",
     "dist",
@@ -57,6 +58,7 @@ exclude = [
     "example/samconfig.toml",
     ".txt",
     ".ini",
+    "*.ipynb",
 ]
 
 # Maximum line length

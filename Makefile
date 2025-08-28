@@ -1,35 +1,30 @@
 
 .PHONY: help install-dev lint type test format format-check build clean
 
-.PHONY: help install-dev lint type test format format-check build clean
-
 help:
 	@echo "Targets: install-dev lint type test format build clean"
 
 install-dev:
-	python -m pip install -U pip
-	pip install -e .[dev]
+	.venv/bin/python -m pip install -U pip
+	.venv/bin/pip install -e '.[dev]'
 
 format-check:
-	ruff format src tests examples --check
+	.venv/bin/python -m ruff format src tests examples --check
 
 format:
-	ruff format src tests examples
+	.venv/bin/python -m ruff format src tests examples
 
 lint: format
-	ruff check src tests examples
+	.venv/bin/python -m ruff check src tests examples
 
 type:
-	mypy src/clipse
+	.venv/bin/python -m mypy src/clipse
 
 test:
-	pytest
-
-format:
-	ruff check --fix .
+	.venv/bin/python -m pytest -q
 
 build:
-	python -m build
+	.venv/bin/python -m build
 
 clean:
 	rm -rf dist build .pytest_cache .mypy_cache

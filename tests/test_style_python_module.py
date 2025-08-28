@@ -1,26 +1,34 @@
 from __future__ import annotations
 
-from pathlib import Path
 import textwrap
+from pathlib import Path
+
 import pytest
 
-from clipse.style_loader import load_style, discover_style_path
+from clipse.style_loader import discover_style_path, load_style
 
+_MINIMAL_STYLE_PY = """\
+STYLE_NAME = "custom-minimal"
 
-_MINIMAL_STYLE_PY = textwrap.dedent(
-    """
-    STYLE_NAME = "custom-minimal"
+def render(resolved_model, *, package_name: str, engine: str | None = None) -> dict[str, str]:
+    # Return bare minimum generated files
+    return {
+        "generated_cli/adapter.py": '''def register(h):
+    pass
 
-    def render(resolved_model, *, package_name: str, engine: str | None = None) -> dict[str, str]:
-        # Return bare minimum generated files
-        return {
-            "generated_cli/adapter.py": "def register(h):\n    pass\n\n"
-                                        "def invoke(object_id, action_id, **kwargs):\n    return None\n",
-            "generated_cli/app.py": "def main():\n    return 0\n\nif __name__ == '__main__':\n    main()\n",
-            "generated_cli/__init__.py": "__all__ = []\n"
-        }
-    """
-)
+def invoke(object_id, action_id, **kwargs):
+    return None
+''',
+        "generated_cli/app.py": '''def main():
+    return 0
+
+if __name__ == '__main__':
+    main()
+''',
+        "generated_cli/__init__.py": '''__all__ = []
+'''
+    }
+"""
 
 
 def test_python_style_module_ok(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:

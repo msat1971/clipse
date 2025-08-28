@@ -11,13 +11,13 @@ from .schema import load_and_validate_style_file
 
 
 class RenderFn(Protocol):
-    def __call__(self, resolved_model: Any, *, package_name: str, engine: Optional[str] = None) -> Dict[str, str]:
-        ...
+    def __call__(self, resolved_model: Any, *, package_name: str, engine: Optional[str] = None) -> Dict[str, str]: ...
 
 
 @dataclass(frozen=True)
 class LoadedStyle:
     """Represents a resolved style, backed by either a Python module or a declarative config."""
+
     name: str
     source: Path
     is_python_module: bool
@@ -28,13 +28,13 @@ class LoadedStyle:
         if not self.is_python_module:
             raise RuntimeError(
                 "Declarative style files declare rules but do not implement 'render'. "
-                "The generator must select an engine-appropriate renderer."
+                "The generator must select an engine-appropriate renderer.",
             )
         assert self.module is not None
         fn = getattr(self.module, "render", None)
         if not callable(fn):
             raise TypeError(
-                f"InvalidStyleModule: {self.source} does not export a callable 'render(resolved_model, *, package_name, engine)'."
+                f"InvalidStyleModule: {self.source} does not export a callable 'render(resolved_model, *, package_name, engine)'.",
             )
         return fn  # type: ignore[return-value]
 
@@ -101,11 +101,17 @@ def load_style(explicit_path: Optional[Path] = None) -> LoadedStyle:
     if path is None:
         raise FileNotFoundError(
             "StyleNotFound: no style file found. Provide --style-file, set CLIPSE_STYLE_FILE, "
-            "or create ./.clipse_style.(py|json|yaml|yml) in the project root."
+            "or create ./.clipse_style.(py|json|yaml|yml) in the project root.",
         )
 
     if path.suffix.lower() == ".py":
         mod = _import_py_module(path)
+        # Validate that the module exports a callable render at load time
+        fn = getattr(mod, "render", None)
+        if not callable(fn):
+            raise TypeError(
+                f"InvalidStyleModule: {path} does not export a callable 'render(resolved_model, *, package_name, engine)'.",
+            )
         name = getattr(mod, "STYLE_NAME", path.stem)
         return LoadedStyle(name=name, source=path, is_python_module=True, module=mod, config=None)
 

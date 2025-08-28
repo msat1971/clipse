@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from importlib import resources
+from importlib.resources.abc import Traversable
 from pathlib import Path
 from typing import Any, Dict, Optional
 
@@ -13,7 +14,6 @@ except Exception:  # pragma: no cover - optional
 
 from jsonschema import Draft202012Validator, ValidationError
 
-
 _SCHEMA_DIR = "schema"
 _CORE_SCHEMA_NAME = "clipse.schema.1.0.0.json"
 _STYLE_SCHEMA_NAME = "clipse_style.schema.1.0.0.json"
@@ -21,13 +21,18 @@ _STYLE_SCHEMA_NAME = "clipse_style.schema.1.0.0.json"
 
 @dataclass(frozen=True)
 class SchemaPaths:
-    core: Path
-    style: Path
+    core: Traversable
+    style: Traversable
 
 
-def _resource_path(package: str, rel: str) -> Path:
-    """Return a filesystem path for a packaged resource."""
-    return resources.files(package).joinpath(rel)  # type: ignore[no-any-return]
+def _resource_path(package: str, rel: str) -> Traversable:
+    """Return a resource handle for a packaged resource.
+
+    Uses importlib.resources' Traversable interface, which supports `.open()` and is
+    compatible with resources inside wheels/zip files without requiring a real
+    filesystem `Path`.
+    """
+    return resources.files(package).joinpath(rel)
 
 
 def get_schema_paths() -> SchemaPaths:
@@ -38,7 +43,7 @@ def get_schema_paths() -> SchemaPaths:
     return SchemaPaths(core=core, style=style)
 
 
-def _load_json(path: Path) -> Dict[str, Any]:
+def _load_json(path: Traversable) -> Dict[str, Any]:
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -58,7 +63,7 @@ def _load_json_or_yaml(path: Path) -> Dict[str, Any]:
     raise ValueError(f"Unsupported style file extension: {suffix!r}. Use .json, .yaml, or .yml.")
 
 
-def _validator(schema_path: Path) -> Draft202012Validator:
+def _validator(schema_path: Traversable) -> Draft202012Validator:
     schema = _load_json(schema_path)
     return Draft202012Validator(schema)
 

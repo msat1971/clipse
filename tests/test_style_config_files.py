@@ -8,13 +8,12 @@ import pytest
 from clipse.schema import load_and_validate_style_file
 from clipse.style_loader import discover_style_path, load_style
 
-
 _MINIMAL_JSON = {
     "name": "posix-unix",
     "version": "1.0.0",
     "command_structure": {"pattern": "unix"},
     "options": {"long_prefix": "--"},
-    "positionals": {}
+    "positionals": {},
 }
 
 _MINIMAL_YAML = """

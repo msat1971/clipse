@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/clipse_style.schema.1.0.0.json",
+  "title": "Clipse Style Rules",
+  "description": "Declarative, engine-agnostic CLI style rules for the clipse generator.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "version", "command_structure", "options", "positionals"],
+  "properties": {
+    "name": { "type": "string", "description": "Unique style name, e.g., 'posix', 'aws-cli-like', 'noun-verb'." },
+    "version": { "type": "string", "description": "Semantic version of this style definition." },
+    "description": { "type": "string" },
+    "extends": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true }
+      ],
+      "description": "Optional base style(s) this style inherits from; later entries override earlier ones."
+    },
+    "language_targets": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["python", "node", "java", "go", "ruby", "rust", "dotnet", "generic"] },
+      "uniqueItems": true
+    },
+    "command_structure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pattern"],
+      "properties": {
+        "pattern": { "type": "string", "enum": ["noun-verb", "verb-noun", "unix", "shell"] },
+        "max_subcommand_depth": { "type": "integer", "minimum": 0, "default": 2 },
+        "allow_hyphenated_tokens": { "type": "boolean", "default": true },
+        "token_case": { "type": "string", "enum": ["lower", "kebab", "snake", "camel", "pascal", "any"], "default": "kebab" },
+        "object_position": { "type": "string", "enum": ["before_action", "after_action", "none"], "default": "before_action" },
+        "supports_repl": { "type": "boolean", "default": false }
+      },
+      "description": "High-level shape of commands and subcommands independent of any engine."
+    },
+    "options": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["long_prefix"],
+      "properties": {
+        "short_prefix": { "type": "string", "default": "-" },
+        "long_prefix": { "type": "string", "default": "--" },
+        "allow_short_flags": { "type": "boolean", "default": true },
+        "allow_combined_short": { "type": "boolean", "default": true },
+        "assignment_styles": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["space", "equals", "colon"] },
+          "default": ["space", "equals"],
+          "uniqueItems": true
+        },
+        "boolean_negation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "form": { "type": "string", "enum": ["no-<name>", "disable-<name>", "invert", "separate-flag"], "default": "no-<name>" },
+            "allow_positive_prefix": { "type": "boolean", "default": false }
+          }
+        },
+        "list_syntax": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "forms": {
+              "type": "array",
+              "items": { "type": "string", "enum": ["csv", "repeat", "json", "space-separated", "kv-shorthand"] },
+              "default": ["csv", "repeat"],
+              "uniqueItems": true
+            },
+            "csv_delimiter": { "type": "string", "default": "," },
+            "kv_separator": { "type": "string", "default": "=" }
+          }
+        },
+        "file_indirection": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "enabled": { "type": "boolean", "default": true },
+            "prefix": { "type": "string", "default": "@", "description": "Read value from file, e.g., --data @payload.json." }
+          }
+        },
+        "stdin_dash": { "type": "boolean", "default": true },
+        "ordering_flexibility": { "type": "string", "enum": ["free", "options-before-positionals", "strict"], "default": "free" },
+        "aliases_allowed": { "type": "boolean", "default": true }
+      },
+      "description": "Conventions for flags/options (short, long, assignment, boolean forms, lists)."
+    },
+    "positionals": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "require_order": { "type": "boolean", "default": true },
+        "variadic_last_only": { "type": "boolean", "default": true },
+        "allow_mixed_after_double_dash": { "type": "boolean", "default": true }
+      },
+      "description": "Rules for positional arguments."
+    },
+    "io_and_output": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "default_format": { "type": "string", "enum": ["auto", "json", "yaml", "yaml-stream", "text", "table", "tsv"], "default": "auto" },
+        "supported_formats": {
+          "type": "array",
+          "items": { "type": "string", "enum": ["json", "yaml", "yaml-stream", "text", "table", "tsv"] },
+          "uniqueItems": true,
+          "default": ["json", "text", "table"]
+        },
+        "pager": { "type": "string", "enum": ["never", "auto", "always"], "default": "auto" },
+        "color": { "type": "string", "enum": ["auto", "always", "never"], "default": "auto" }
+      },
+      "description": "Output formats, paging, color."
+    },
+    "filtering_and_query": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "option_name": { "type": "string", "default": "--query" },
+        "syntax_name": { "type": "string", "default": "generic" },
+        "expression_form": { "type": "string", "enum": ["string", "file", "either"], "default": "either" },
+        "doc_url": { "type": "string", "format": "uri" }
+      },
+      "description": "Client-side filtering/transforms (engine-agnostic)."
+    },
+    "configuration": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "supports_profiles": { "type": "boolean", "default": false },
+        "profile_option": { "type": "string", "default": "--profile" },
+        "env_prefix": { "type": "string" },
+        "config_files": { "type": "array", "items": { "type": "string" } }
+      },
+      "description": "External configuration (files, env, profiles)."
+    },
+    "help_and_usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "show_option_table": { "type": "boolean", "default": true },
+        "show_examples": { "type": "boolean", "default": true },
+        "width": { "type": "integer", "minimum": 60, "default": 100 },
+        "wrap_mode": { "type": "string", "enum": ["word", "space", "none"], "default": "word" }
+      },
+      "description": "Help layout preferences."
+    },
+    "identifiers": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "allowed_pattern": { "type": "string", "default": "^[a-z0-9]+(?:[\\-_:][a-z0-9]+)*$" },
+        "case_sensitivity": { "type": "string", "enum": ["case-sensitive", "case-insensitive"], "default": "case-sensitive" },
+        "reserved_words": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "description": "Naming rules for commands/options/positionals."
+    },
+    "collections_and_types": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "string_formats": { "type": "array", "items": { "type": "string", "enum": ["plain", "json", "path", "uri", "uuid", "email"] }, "uniqueItems": true },
+        "numbers": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "allow_scientific": { "type": "boolean", "default": true }, "thousand_separators": { "type": "boolean", "default": false } }
+        },
+        "lists": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": { "preferred_form": { "type": "string", "enum": ["csv", "repeat", "json", "space-separated", "kv-shorthand"], "default": "csv" } }
+        },
+        "maps": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "preferred_form": { "type": "string", "enum": ["json", "kv-shorthand"], "default": "kv-shorthand" },
+            "kv_separator": { "type": "string", "default": "=" }
+          }
+        }
+      },
+      "description": "Guidance for mapping logical types to CLI syntax (engine/language agnostic)."
+    },
+    "examples": { "type": "array", "items": { "type": "string" } },
+    "extensions": { "type": "object", "additionalProperties": true },
+    "implementation_hints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "preferred_tokenization": { "type": "string", "enum": ["recursive-descent", "table-driven", "regex"], "default": "table-driven" },
+        "thread_model": { "type": "string", "enum": ["sync", "async", "either"], "default": "either" }
+      }
+    }
+  }
+}
