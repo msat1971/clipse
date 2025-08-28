@@ -47,8 +47,15 @@ def load_config(source: Union[str, Path, IO[str]]) -> dict[str, Any]:
 
 
 def _loads_guess(text: str) -> dict[str, Any]:
-    """Decode ``text`` as JSON if it looks like JSON, otherwise YAML if available."""
+    """Decode ``text`` as JSON if it looks like JSON; otherwise YAML if available.
+
+    Raises a clear error if YAML is not available and the input does not look like JSON.
+    """
     s = text.lstrip()
     if s.startswith("{") or s.startswith("["):
         return json.loads(text)
-    return yaml.safe_load(text) or {} if yaml is not None else json.loads(text)
+    if yaml is None:
+        raise RuntimeError(
+            "YAML support requires PyYAML; install it or provide JSON input.",
+        )
+    return yaml.safe_load(text) or {}

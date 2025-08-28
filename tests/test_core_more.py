@@ -51,8 +51,8 @@ def test_loads_guess_yaml_branch_with_yaml(monkeypatch) -> None:
     assert cfg == {"a": 1}
 
 
-def test_loads_guess_when_yaml_unavailable_falls_back_to_json(monkeypatch) -> None:
-    # When yaml is None and text doesn't look like JSON/JSON array, we try json.loads and get a JSON error
+def test_loads_guess_when_yaml_unavailable_raises(monkeypatch) -> None:
+    # When yaml is None and input doesn't look like JSON, raise a clear error
     monkeypatch.setattr(core, "yaml", None)
-    with pytest.raises(json.JSONDecodeError):
+    with pytest.raises(RuntimeError):
         core._loads_guess("a: 1\n")

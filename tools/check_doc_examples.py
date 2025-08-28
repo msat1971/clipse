@@ -36,9 +36,7 @@ def _should_skip(path: Path) -> bool:
 
 
 def _has_examples(doc: str | None) -> bool:
-    if not doc:
-        return False
-    return "examples" in doc.lower()
+    return False if not doc else "examples" in doc.lower()
 
 
 def _iter_public_nodes(tree: ast.AST) -> Iterable[tuple[str, ast.AST]]:

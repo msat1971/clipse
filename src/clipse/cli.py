@@ -35,21 +35,20 @@ def _discover_config_path(explicit: Path | None) -> Path:
     """Resolve the config path using discovery rules.
 
     Discovery order:
-      1) env var `CLIPSE_APP_CONFIG`
-      2) explicit `--config`
+      1) explicit `--config`
+      2) env var `CLIPSE_APP_CONFIG`
       3) local file `./.clipse`
       4) local file `./clipse`
 
     Raises FileNotFoundError if none are found.
     """
-    # Discovery order: 1) env CLIPSE_APP_CONFIG 2) --config 3) ./.clipse 4) ./clipse
-    env_val = os.getenv("CLIPSE_APP_CONFIG")
-    if env_val:
+    # Discovery order: 1) --config 2) env CLIPSE_APP_CONFIG 3) ./.clipse 4) ./clipse
+    if explicit:
+        return explicit
+    if env_val := os.getenv("CLIPSE_APP_CONFIG"):
         p = Path(env_val).expanduser()
         if p.exists():
             return p
-    if explicit:
-        return explicit
     for cand in (Path(".clipse"), Path("clipse")):
         if cand.exists():
             return cand
@@ -198,7 +197,9 @@ if __name__ == "__main__":  # pragma: no cover
     print(f"Generated package at {out.resolve()}")
     if style_path:
         print(f"Using style file: {style_path}")
-    instr = generate_instructions()
+    # Use the directory name under --out as the package name for instructions
+    package_name = out.resolve().name
+    instr = generate_instructions(package=package_name)
     print("\nIntegration Instructions:")
     print(instr.install_snippet)
     print(instr.entrypoint_snippet)
@@ -212,8 +213,7 @@ def cmd_list_styles() -> int:
     print("Built-in styles:")
     for s in BUILTIN_STYLES:
         print(f"  - {s}")
-    found = discover_style_path(explicit_path=None)
-    if found:
+    if found := discover_style_path(explicit_path=None):
         print(f"Discovered style file: {found}")
     return 0
 
@@ -227,7 +227,6 @@ def build_parser() -> argparse.ArgumentParser:
         True
     """
     p = argparse.ArgumentParser(prog="clipse", description="Clipse generator")
-    p.add_argument("--list-styles", action="store_true", dest="list_styles", help="List built-in and discovered styles")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     v = sub.add_parser("validate", help="Validate a config against the core schema")
@@ -250,9 +249,6 @@ def main(argv: list[str] | None = None) -> int:
     """CLI entrypoint. Parses args and dispatches to subcommands."""
     parser = build_parser()
     ns = parser.parse_args(argv)
-
-    if getattr(ns, "list_styles", False):
-        return cmd_list_styles()
 
     if ns.cmd == "validate":
         return cmd_validate(ns.config)
