@@ -42,6 +42,8 @@ nav:
       - Getting Started: integration/index.md
   - Project:
       - Codebase: project/index.md
+  - Reference:
+      - API Overview: reference/index.md
 markdown_extensions:
   - admonition
   - codehilite
@@ -57,5 +59,17 @@ extra:
       link: https://github.com/msat1971/dclipse
 plugins:
   - search
+  - autorefs
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            docstring_style: google
+            show_source: true
+            separate_signature: true
+            merge_init_into_class: true
+            inherited_members: true
+            filters: ["!^_"]
 extra_css:
   - assets/styles/extra.css
