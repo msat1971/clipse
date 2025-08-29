@@ -7,12 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const resolve = (path) => new URL(path, document.baseURI).href;
 
-  function updateLogo() {
+  const updateLogo = () => {
     const isDark = document.documentElement.getAttribute('data-md-color-scheme') === 'slate';
     const target = resolve(isDark ? DARK : LIGHT);
     if (!logoImg.getAttribute('alt')) logoImg.setAttribute('alt', 'Brand Dawg Logo');
     if (logoImg.src !== target) logoImg.src = target;
-  }
+  };
 
   updateLogo();
   const observer = new MutationObserver(updateLogo);

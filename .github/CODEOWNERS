@@ -1,0 +1,32 @@
+# CODEOWNERS
+# Learn more: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+#
+# Best practices:
+# - Keep a default owner for all files.
+# - Override ownership for important areas (infra, docs, schemas, source, tests).
+# - Prefer GitHub teams (e.g., @org/team) as the project grows.
+# - Keep paths stable; update when moving files.
+
+# Default: everything requires review by the maintainer.
+* @msat1971
+
+# Source code (explicit for future granularity)
+/src/** @msat1971
+/src/dclipse/** @msat1971
+
+# Tests
+/tests/** @msat1971
+
+# Documentation (MkDocs)
+/docs/** @msat1971
+
+# Packaged schemas and copies
+/src/dclipse/schema/** @msat1971
+/schema/** @msat1971
+/docs/schema/** @msat1971
+
+# CI/CD workflows and automations
+/.github/** @msat1971
+
+# Examples and notebooks
+/examples/** @msat1971
