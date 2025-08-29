@@ -73,3 +73,5 @@ plugins:
             filters: ["!^_"]
 extra_css:
   - assets/styles/extra.css
+extra_javascript:
+  - assets/scripts/logo-swap.js
