@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://example.com/schemas/clipse-objects-actions.v1.json",
-  "title": "Clipse Objects/Actions Configuration",
+  "$id": "https://example.com/schemas/dclipse-objects-actions.v1.json",
+  "title": "Dclipse Objects/Actions Configuration",
   "type": "object",
   "required": ["global", "behavior", "objects", "actions"],
   "additionalProperties": false,

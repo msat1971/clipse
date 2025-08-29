@@ -1,5 +1,5 @@
 {
-  "clipse_version": "https://github.com/msat1971/clipse/blob/develop/schema/clipse.schema.1.0.0.json",
+  "clipse_version": "https://github.com/msat1971/dclipse/blob/develop/schema/dclipse.schema.1.0.0.json",
   "title": "Example configuration file",
   "behavior": {
     "allow_abbrev": false,
