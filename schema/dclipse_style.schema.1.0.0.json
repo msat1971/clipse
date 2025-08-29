@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.com/schemas/clipse_style.schema.1.0.0.json",
-  "title": "Clipse Style Rules",
-  "description": "Declarative, engine-agnostic CLI style rules for the clipse generator.",
+  "title": "Dclipse Style Rules",
+  "description": "Declarative, engine-agnostic CLI style rules for the dclipse generator.",
   "type": "object",
   "additionalProperties": false,
   "required": ["name", "version", "command_structure", "options", "positionals"],

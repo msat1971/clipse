@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Sync packaged schemas from src/clipse/schema/ to repo-level locations.
+"""Sync packaged schemas from src/dclipse/schema/ to repo-level locations.
 
-- Source of truth: src/clipse/schema/*.json
+- Source of truth: src/dclipse/schema/*.json
 - Destinations:    schema/*.json and docs/schema/*.json
 
 Usage:
@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-SRC_DIR = ROOT / "src" / "clipse" / "schema"
+SRC_DIR = ROOT / "src" / "dclipse" / "schema"
 DEST_REPO = ROOT / "schema"
 DEST_DOCS = ROOT / "docs" / "schema"
 
