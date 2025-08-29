@@ -33,4 +33,4 @@ repos:
       name: Ensure schema copies are in sync
       entry: python3 tools/sync_schemas.py --check
       language: system
-      files: '^src/clipse/schema/.*\.json$'
+      files: '^src/dclipse/schema/.*\.json$'
