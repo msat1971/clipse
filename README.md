@@ -1,5 +1,5 @@
 <!-- markdownlint-disable MD013 MD041 MD043  -->
-<img src="docs/assets/images/Logo_dclipse-horizontal_White.svg" alt="Dclipse logo" width="300">
+![Dclipse logo](docs/assets/images/Logo_dclipse-horizontal_White.svg)
 
 # DAWG’s CLI Specification Engine
 
